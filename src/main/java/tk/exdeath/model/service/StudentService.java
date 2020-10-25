@@ -19,4 +19,15 @@ public class StudentService {
     public Student readByName(String firstName, String secondName) {
         return DAO.readByName(firstName, secondName);
     }
+
+    public Student readByLogin(String login) {
+
+        if (DAO.readByLogin(login) == null) {
+            Student student = new Student();
+            student.setLogin("null");
+            return student;
+        }
+
+        return DAO.readByLogin(login);
+    }
 }

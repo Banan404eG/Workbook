@@ -39,6 +39,11 @@ public class StudentDAOImpl implements StudentDAO {
         return session.createQuery(criteria.select(root).where(firstNamePredicate, secondNamePredicate)).uniqueResult();
     }
 
+    @Override
+    public Student readByLogin(String login) {
+        return session.createQuery(criteria.select(root).where(builder.like(root.get("login"), login))).uniqueResult();
+    }
+
     protected void finalize() {
         try {
             session.close();

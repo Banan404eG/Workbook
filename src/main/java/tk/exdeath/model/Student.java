@@ -43,4 +43,28 @@ public class Student implements Serializable {
                 ", studentClass='" + studentClass + '\'' +
                 '}';
     }
+
+    public void setLogin(String login) {
+        this.login = login;
+    }
+
+    public String getLogin() {
+        return login;
+    }
+
+    public String getPassword() {
+        return password;
+    }
+
+    public String getFirstName() {
+        return firstName;
+    }
+
+    public String getSecondName() {
+        return secondName;
+    }
+
+    public String getStudentClass() {
+        return studentClass;
+    }
 }

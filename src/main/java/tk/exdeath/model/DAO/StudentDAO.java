@@ -8,4 +8,6 @@ public interface StudentDAO {
     void update(Student student);
 
     Student readByName(String firstName, String secondName);
+
+    Student readByLogin(String login);
 }
