@@ -2,6 +2,7 @@ package tk.exdeath.model;
 
 import javax.persistence.*;
 import java.io.Serializable;
+import java.util.Set;
 
 @Entity
 @Table(name = "workbook.teachers")
@@ -19,6 +20,11 @@ public class Teacher implements Serializable {
     private String firstName;
     @Column(name = "second_name")
     private String secondName;
+    @ManyToMany(cascade = CascadeType.ALL)
+    @JoinTable(name = "workbook.teachers_students",
+            joinColumns = @JoinColumn(name = "teacher_id"),
+            inverseJoinColumns = @JoinColumn(name = "student_id"))
+    Set<Student> students;
 
     public Teacher() {
     }
@@ -38,5 +44,29 @@ public class Teacher implements Serializable {
                 ", firstName='" + firstName + '\'' +
                 ", secondName='" + secondName + '\'' +
                 '}';
+    }
+
+    public String getLogin() {
+        return login;
+    }
+
+    public String getPassword() {
+        return password;
+    }
+
+    public String getFirstName() {
+        return firstName;
+    }
+
+    public String getSecondName() {
+        return secondName;
+    }
+
+    public Set<Student> getStudents() {
+        return students;
+    }
+
+    public void addStudent(Student student) {
+        students.add(student);
     }
 }

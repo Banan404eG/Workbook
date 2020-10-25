@@ -6,7 +6,8 @@
     <link rel="stylesheet" th:href="@{webjars/bootstrap/4.2.1/css/bootstrap.min.css}"/>
 </head>
 <body>
-<h1 th:text="${student}"></h1>
 <h1 th:text="${teacher}"></h1>
+
+<li style="font-size: 30px" th:each="student : ${students}" th:text="${student}"></li>
 </body>
 </html>
