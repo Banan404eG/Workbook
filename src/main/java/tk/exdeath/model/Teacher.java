@@ -8,6 +8,11 @@ import java.util.Set;
 @Table(name = "workbook.teachers")
 public class Teacher implements Serializable {
 
+    @ManyToMany(cascade = CascadeType.ALL)
+    @JoinTable(name = "workbook.teachers_students",
+            joinColumns = @JoinColumn(name = "teacher_id"),
+            inverseJoinColumns = @JoinColumn(name = "student_id"))
+    Set<Student> students;
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "teacher_id")
@@ -20,15 +25,6 @@ public class Teacher implements Serializable {
     private String firstName;
     @Column(name = "second_name")
     private String secondName;
-    @ManyToMany(cascade = CascadeType.ALL)
-    @JoinTable(name = "workbook.teachers_students",
-            joinColumns = @JoinColumn(name = "teacher_id"),
-            inverseJoinColumns = @JoinColumn(name = "student_id"))
-    Set<Student> students;
-
-    public void setLogin(String login) {
-        this.login = login;
-    }
 
     public Teacher() {
     }
@@ -52,6 +48,10 @@ public class Teacher implements Serializable {
 
     public String getLogin() {
         return login;
+    }
+
+    public void setLogin(String login) {
+        this.login = login;
     }
 
     public String getPassword() {
