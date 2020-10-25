@@ -8,4 +8,6 @@ public interface TeacherDAO {
     void update(Teacher teacher);
 
     Teacher readByName(String firstName, String secondName);
+
+    Teacher readByLogin(String login);
 }

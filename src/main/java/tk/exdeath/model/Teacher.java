@@ -26,6 +26,10 @@ public class Teacher implements Serializable {
             inverseJoinColumns = @JoinColumn(name = "student_id"))
     Set<Student> students;
 
+    public void setLogin(String login) {
+        this.login = login;
+    }
+
     public Teacher() {
     }
 

@@ -19,4 +19,15 @@ public class TeacherService {
     public Teacher readByName(String firstName, String secondName) {
         return DAO.readByName(firstName, secondName);
     }
+
+    public Teacher readByLogin(String login) {
+
+        if (DAO.readByLogin(login) == null) {
+            Teacher teacher = new Teacher();
+            teacher.setLogin("null");
+            return teacher;
+        }
+
+        return DAO.readByLogin(login);
+    }
 }
