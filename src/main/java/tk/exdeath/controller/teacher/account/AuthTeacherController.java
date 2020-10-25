@@ -18,12 +18,12 @@ public class AuthTeacherController {
     String login;
     Model model;
 
-    @GetMapping("/authStudent")
+    @GetMapping("/authTeacher")
     public String auth() {
         return PATH;
     }
 
-    @PostMapping("/authStudent")
+    @PostMapping("/authTeacher")
     public String passCheck(
             @RequestParam String login,
             @RequestParam String password, Model model) {
