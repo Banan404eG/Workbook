@@ -1,11 +1,10 @@
-package tk.exdeath.controller.workbooks.Informatics.seven;
+package tk.exdeath.controller.workbooks.Informatics.grade7.page8;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
-
-import java.util.ArrayList;
+import tk.exdeath.controller.student.LoggedStudent;
 
 @Controller
 public class Informatics78 {
@@ -33,30 +32,12 @@ public class Informatics78 {
             @RequestParam String four91,
             @RequestParam String four92, Model model) {
 
-        ArrayList<String> answers = new ArrayList<>();
+        InformaticsModel78 task = new InformaticsModel78(three1, three2, four11, four12, four21, four22, four31, four32, four41, four42, four51, four52, four61, four62, four71, four72, four81, four82, four91, four92);
 
-        answers.add(three1);
-        answers.add(three2);
-        answers.add(four11);
-        answers.add(four12);
-        answers.add(four21);
-        answers.add(four22);
-        answers.add(four31);
-        answers.add(four32);
-        answers.add(four41);
-        answers.add(four42);
-        answers.add(four51);
-        answers.add(four52);
-        answers.add(four61);
-        answers.add(four62);
-        answers.add(four71);
-        answers.add(four72);
-        answers.add(four81);
-        answers.add(four82);
-        answers.add(four91);
-        answers.add(four92);
+        LoggedStudent.addTask(task);
+        LoggedStudent.update();
 
-        model.addAttribute("Error", answers);
+        model.addAttribute("Error", task);
         return "errorPage";
     }
 }

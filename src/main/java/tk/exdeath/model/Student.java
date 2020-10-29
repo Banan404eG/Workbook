@@ -1,7 +1,10 @@
 package tk.exdeath.model;
 
+import tk.exdeath.controller.workbooks.Task;
+
 import javax.persistence.*;
 import java.io.Serializable;
+import java.util.List;
 
 @Entity
 @Table(name = "workbook.students")
@@ -21,6 +24,8 @@ public class Student implements Serializable {
     private String secondName;
     @Column(name = "class")
     private String studentClass;
+    @OneToMany(cascade = CascadeType.ALL, orphanRemoval = true)
+    List<Task> tasks;
 
     public Student() {
     }
@@ -66,5 +71,13 @@ public class Student implements Serializable {
 
     public String getStudentClass() {
         return studentClass;
+    }
+
+    public List<Task> getTasks() {
+        return tasks;
+    }
+
+    public void addTask(Task task) {
+        tasks.add(task);
     }
 }
