@@ -5,9 +5,14 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import tk.exdeath.controller.student.LoggedStudent;
+import tk.exdeath.model.Task;
+import tk.exdeath.model.service.WorkbookService;
+import tk.exdeath.model.workbooks.Informatics.grade7.page8.Informatics78;
 
 @Controller
-public class Informatics78 {
+public class Informatics78Controller {
+
+    private final String TABLE_NAME = "inf7_8";
 
     @PostMapping("/informatics78")
     public String informatics78(
@@ -32,12 +37,15 @@ public class Informatics78 {
             @RequestParam String four91,
             @RequestParam String four92, Model model) {
 
-        InformaticsModel78 task = new InformaticsModel78(three1, three2, four11, four12, four21, four22, four31, four32, four41, four42, four51, four52, four61, four62, four71, four72, four81, four82, four91, four92);
+        int studentID = LoggedStudent.getStudent().getStudentID();
+        Informatics78 workbook = new Informatics78(three1, three2, four11, four12, four21, four22, four31, four32, four41, four42, four51, four52, four61, four62, four71, four72, four81, four82, four91, four92, studentID);
+        WorkbookService<Informatics78> workbookService = new WorkbookService<>();
+        workbookService.create(workbook);
 
-        LoggedStudent.addTask(task);
+        LoggedStudent.getStudent().addTask(new Task(LoggedStudent.getStudent(), workbook.getId(), TABLE_NAME));
         LoggedStudent.update();
 
-        model.addAttribute("Error", task);
+        model.addAttribute("Error", workbook);
         return "errorPage";
     }
 }

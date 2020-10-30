@@ -1,6 +1,5 @@
 package tk.exdeath.controller.student;
 
-import tk.exdeath.controller.workbooks.Task;
 import tk.exdeath.model.Student;
 import tk.exdeath.model.service.StudentService;
 
@@ -28,10 +27,6 @@ public abstract class LoggedStudent {
 
     public static void setLogin(String login) {
         LoggedStudent.login = login;
-    }
-
-    public static void addTask(Task task) {
-        student.addTask(task);
     }
 
     public static void update() {

@@ -1,13 +1,11 @@
-package tk.exdeath.controller.workbooks.Informatics.grade7.page8;
-
-import tk.exdeath.controller.workbooks.Task;
+package tk.exdeath.model.workbooks.Informatics.grade7.page8;
 
 import javax.persistence.*;
 import java.io.Serializable;
 
 @Entity
 @Table(name = "workbook.inf7_8")
-public class InformaticsModel78 implements Serializable, Task {
+public class Informatics78 implements Serializable {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -15,7 +13,7 @@ public class InformaticsModel78 implements Serializable, Task {
     private int id;
     @Column(name = "three1")
     private String three1;
-    @Column(name = "three1")
+    @Column(name = "three2")
     private String three2;
     @Column(name = "four11")
     private String four11;
@@ -53,6 +51,8 @@ public class InformaticsModel78 implements Serializable, Task {
     private String four91;
     @Column(name = "four92")
     private String four92;
+    @Column(name = "student_id")
+    private int studentID;
 
     @Override
     public String toString() {
@@ -69,7 +69,7 @@ public class InformaticsModel78 implements Serializable, Task {
                 "\n" + four91 + ", " + four92;
     }
 
-    public InformaticsModel78(String three1, String three2, String four11, String four12, String four21, String four22, String four31, String four32, String four41, String four42, String four51, String four52, String four61, String four62, String four71, String four72, String four81, String four82, String four91, String four92) {
+    public Informatics78(String three1, String three2, String four11, String four12, String four21, String four22, String four31, String four32, String four41, String four42, String four51, String four52, String four61, String four62, String four71, String four72, String four81, String four82, String four91, String four92, int studentID) {
         this.three1 = three1;
         this.three2 = three2;
         this.four11 = four11;
@@ -90,5 +90,10 @@ public class InformaticsModel78 implements Serializable, Task {
         this.four82 = four82;
         this.four91 = four91;
         this.four92 = four92;
+        this.studentID = studentID;
+    }
+
+    public int getId() {
+        return id;
     }
 }
