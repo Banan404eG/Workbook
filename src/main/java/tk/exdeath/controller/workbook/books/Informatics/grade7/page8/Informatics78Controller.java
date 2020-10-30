@@ -1,4 +1,4 @@
-package tk.exdeath.controller.workbooks.Informatics.grade7.page8;
+package tk.exdeath.controller.workbook.books.Informatics.grade7.page8;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;

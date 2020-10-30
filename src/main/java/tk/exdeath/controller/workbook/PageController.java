@@ -1,4 +1,4 @@
-package tk.exdeath.controller.student.workbook;
+package tk.exdeath.controller.workbook;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -6,9 +6,9 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
 @Controller
-public class WorkbookController {
+public class PageController {
 
-    @GetMapping("/workbook")
+    @GetMapping("/page")
     public String workbook(
             @RequestParam(defaultValue = "-1") int grade,
             @RequestParam(defaultValue = "NULL") String lesson,
@@ -19,7 +19,7 @@ public class WorkbookController {
             return "errorPage";
         }
 
-        return "workbooks/" + lesson + "/" + grade + "/" + page;
+        return "workbook/" + lesson + "/" + grade + "/" + page;
     }
 
     private boolean paramsIsInvalid(int grade, String lesson, int page) {

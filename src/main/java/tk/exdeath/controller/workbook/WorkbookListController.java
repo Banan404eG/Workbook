@@ -1,13 +1,13 @@
-package tk.exdeath.controller.student.workbook;
+package tk.exdeath.controller.workbook;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 
 @Controller
-public class BookLibraryController {
+public class WorkbookListController {
 
-    @GetMapping("/bookLibrary")
+    @GetMapping("/workbookList")
     public String getLibrary() {
-        return "student/workbook/bookLibrary";
+        return "workbook/workbookList";
     }
 }

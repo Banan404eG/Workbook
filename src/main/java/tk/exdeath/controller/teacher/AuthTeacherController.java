@@ -1,43 +1,42 @@
-package tk.exdeath.controller.student.account;
+package tk.exdeath.controller.teacher;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
-import tk.exdeath.controller.student.LoggedStudent;
-import tk.exdeath.model.Student;
-import tk.exdeath.model.service.StudentService;
+import tk.exdeath.model.Teacher;
+import tk.exdeath.model.service.TeacherService;
 
 @Controller
-public class AuthStudentController {
+public class AuthTeacherController {
 
-    final String PATH = "student/account/authStudent";
+    final String PATH = "teacher/authTeacher";
 
-    Student student;
+    Teacher teacher;
     String login;
     Model model;
 
-    @GetMapping("/authStudent")
+    @GetMapping("/authTeacher")
     public String auth() {
         return PATH;
     }
 
-    @PostMapping("/authStudent")
+    @PostMapping("/authTeacher")
     public String passCheck(
             @RequestParam String login,
             @RequestParam String password, Model model) {
 
         this.login = login;
         this.model = model;
-        StudentService service = LoggedStudent.getStudentService();
-        student = service.readByLogin(login);
+        TeacherService service = LoggedTeacher.getTeacherService();
+        teacher = service.readByLogin(login);
 
-        if (student.getLogin().equals("null")) {
+        if (teacher.getLogin().equals("null")) {
             return invalidLogin();
         }
 
-        if (student.getPassword().equals(password)) {
+        if (teacher.getPassword().equals(password)) {
             return signIn();
         }
 
@@ -45,13 +44,13 @@ public class AuthStudentController {
     }
 
     private String signIn() {
-        LoggedStudent.setLogin(login);
-        LoggedStudent.setStudent(student);
-        return "redirect:/accountStudent";
+        LoggedTeacher.setLogin(login);
+        LoggedTeacher.setTeacher(teacher);
+        return "redirect:/accountTeacher";
     }
 
     private String invalidLogin() {
-        model.addAttribute("Error", "Аккаунта с таким логином не существует, вы можете создать его нажав на одноименную ссылку");
+        model.addAttribute("Error", "Аккаунта с таким логином не существует");
         return PATH;
     }
 
