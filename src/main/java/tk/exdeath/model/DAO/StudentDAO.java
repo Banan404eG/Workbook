@@ -10,4 +10,6 @@ public interface StudentDAO {
     Student readByName(String firstName, String secondName);
 
     Student readByLogin(String login);
+
+    Student readByID(int id);
 }

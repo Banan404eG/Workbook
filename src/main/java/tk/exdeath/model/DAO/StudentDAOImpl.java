@@ -44,6 +44,11 @@ public class StudentDAOImpl implements StudentDAO {
         return session.createQuery(criteria.select(root).where(builder.like(root.get("login"), login))).uniqueResult();
     }
 
+    @Override
+    public Student readByID(int id) {
+        return session.get(Student.class, id);
+    }
+
     protected void finalize() {
         try {
             session.close();

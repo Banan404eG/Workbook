@@ -30,4 +30,8 @@ public class StudentService {
 
         return DAO.readByLogin(login);
     }
+
+    public Student readByID(int id) {
+        return DAO.readByID(id);
+    }
 }

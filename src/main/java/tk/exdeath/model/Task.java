@@ -19,6 +19,10 @@ public class Task implements Serializable {
     @JoinColumn(name = "student_id")
     private Student student;
 
+    public Task() {
+
+    }
+
     public Task(Student student, int taskID, String tableName) {
         this.student = student;
         this.taskID = taskID;

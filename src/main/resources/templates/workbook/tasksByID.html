@@ -34,11 +34,11 @@
     </style>
 </head>
 <body>
-<h1> Список ваших учеников: </h1>
+<h1 th:text="'Список заданий ученика: ' + ${Name}"></h1>
 <table class="students">
     <tr>
         <td class="left">
-            <li style="font-size: 30px" th:each="student : ${students}" th:text="${student}"></li>
+            <li style="font-size: 30px" th:each="task : ${tasks}" th:text="${task}"></li>
         </td>
         <td class="right">
             <a style="font-size: 30px" th:each="id : ${IDs}"
