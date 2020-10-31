@@ -9,10 +9,47 @@
             padding-top: 5rem;
             text-align: center;
         }
+
+        table.students {
+            width: 100%;
+            border-spacing: 0;
+        }
+
+        table.students td {
+            width: 50%;
+            vertical-align: top;
+        }
+
+        td.left {
+            text-align: right;
+        }
+
+        td.right {
+            text-align: left;
+        }
+
+        A {
+            text-decoration: none;
+        }
     </style>
 </head>
 <body>
 <h1> Список ваших учеников: </h1>
-<li style="font-size: 30px" th:each="student : ${students}" th:text="${student}"></li>
+<table class="students">
+    <tr>
+        <td class="left">
+            <li style="font-size: 30px" th:each="student : ${students}" th:text="${student}"></li>
+        </td>
+        <td class="right">
+            <a style="font-size: 30px" th:each="id : ${IDs}"
+               th:utext="' ссылка на задания &lt;br /&gt;'"
+               th:href="@{|/XXX?id=${id}|}">
+
+            </a>
+        </td>
+    </tr>
+</table>
+
+
 </body>
 </html>

@@ -13,21 +13,18 @@ public class StudentListController {
 
     @GetMapping("/studentList")
     public String studentList(Model model) {
-        model.addAttribute("students", getStudentNames());
-        return "teacher/studentList";
-    }
-
-
-    private List<String> getStudentNames() {
         List<String> studentNames = new ArrayList<>();
+        List<String> studentIDs = new ArrayList<>();
         String firstName;
         String secondName;
         for (Student student : LoggedTeacher.getTeacher().getStudents()) {
             firstName = student.getFirstName();
             secondName = student.getSecondName();
             studentNames.add(firstName + " " + secondName);
+            studentIDs.add(String.valueOf(student.getStudentID()));
         }
-
-        return studentNames;
+        model.addAttribute("students", studentNames);
+        model.addAttribute("IDs", studentIDs);
+        return "teacher/studentList";
     }
 }
