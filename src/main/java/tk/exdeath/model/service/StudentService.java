@@ -17,21 +17,25 @@ public class StudentService {
     }
 
     public Student readByName(String firstName, String secondName) {
-        return DAO.readByName(firstName, secondName);
+        Student student = DAO.readByName(firstName, secondName);
+        return nullCheck(student);
     }
 
     public Student readByLogin(String login) {
-
-        if (DAO.readByLogin(login) == null) {
-            Student student = new Student();
-            student.setLogin("null");
-            return student;
-        }
-
-        return DAO.readByLogin(login);
+        Student student = DAO.readByLogin(login);
+        return nullCheck(student);
     }
 
     public Student readByID(int id) {
-        return DAO.readByID(id);
+        Student student = DAO.readByID(id);
+        return nullCheck(student);
+    }
+
+    private Student nullCheck(Student student) {
+        if (student == null) {
+            student = new Student();
+            student.setLogin("null");
+        }
+        return student;
     }
 }
