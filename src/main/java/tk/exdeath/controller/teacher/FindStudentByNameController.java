@@ -26,15 +26,15 @@ public class FindStudentByNameController {
         StudentService studentService = new StudentService();
         Student student = studentService.readByName(firstName, secondName);
 
-        if (studentExist(student)) {
-            return "redirect:/tasksByID?id=" + student.getStudentID();
+        if (studentDoesNotExist(student)) {
+            model.addAttribute("Error", "Ученика с такими именем и фамилией не существует");
+            return PATH;
         }
 
-        model.addAttribute("Error", "Ученика с такими именем и фамилией не существует");
-        return PATH;
+        return "redirect:/tasksByID?id=" + student.getStudentID();
     }
 
-    private boolean studentExist(Student student) {
-        return !student.getLogin().equals("null");
+    private boolean studentDoesNotExist(Student student) {
+        return student.getLogin().equals("null");
     }
 }

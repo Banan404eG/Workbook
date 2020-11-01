@@ -35,6 +35,8 @@
 </head>
 <body>
 <h1 th:text="'Список заданий ученика: ' + ${Name}"></h1>
+<h1 th:text="${Error}"></h1>
+
 <table class="students">
     <tr>
         <td class="left">
@@ -48,7 +50,5 @@
         </td>
     </tr>
 </table>
-
-
 </body>
 </html>

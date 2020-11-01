@@ -13,18 +13,30 @@ import java.util.List;
 @Controller
 public class TasksByIDController {
 
+    final String PATH = "workbook/tasksByID";
+
     @GetMapping("/tasksByID")
     public String tasksByID(
             @RequestParam int id, Model model) {
 
         StudentService studentService = new StudentService();
         Student student = studentService.readByID(id);
+
+        if (studentDoesNotExist(student)) {
+            model.addAttribute("Error", "Ученика с такими ID не существует");
+            return PATH;
+        }
+
         String firstName = student.getFirstName();
         String secondName = student.getSecondName();
         List<Task> tasks = student.getTasks();
 
         model.addAttribute("Name", firstName + " " + secondName);
         model.addAttribute("tasks", tasks);
-        return "workbook/tasksByID";
+        return PATH;
+    }
+
+    private boolean studentDoesNotExist(Student student) {
+        return student.getLogin().equals("null");
     }
 }
