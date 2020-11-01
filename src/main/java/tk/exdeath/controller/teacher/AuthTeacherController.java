@@ -32,21 +32,20 @@ public class AuthTeacherController {
         TeacherService service = LoggedTeacher.getTeacherService();
         teacher = service.readByLogin(login);
 
-        if (teacher.getLogin().equals("null")) {
+        if (teacherDoesNotExist()) {
             return invalidLogin();
         }
 
-        if (teacher.getPassword().equals(password)) {
-            return signIn();
+        if (passwordIsNotCorrect(password)) {
+            return invalidPassword();
         }
 
-        return invalidPassword();
+        return signIn();
     }
 
-    private String signIn() {
-        LoggedTeacher.setLogin(login);
-        LoggedTeacher.setTeacher(teacher);
-        return "redirect:/accountTeacher";
+
+    private boolean teacherDoesNotExist() {
+        return teacher.getLogin().equals("null");
     }
 
     private String invalidLogin() {
@@ -54,8 +53,18 @@ public class AuthTeacherController {
         return PATH;
     }
 
+    private boolean passwordIsNotCorrect(String password) {
+        return !teacher.getPassword().equals(password);
+    }
+
     private String invalidPassword() {
         model.addAttribute("Error", "Неверный пароль, попробуйте ещё раз");
         return PATH;
+    }
+
+    private String signIn() {
+        LoggedTeacher.setLogin(login);
+        LoggedTeacher.setTeacher(teacher);
+        return "redirect:/accountTeacher";
     }
 }

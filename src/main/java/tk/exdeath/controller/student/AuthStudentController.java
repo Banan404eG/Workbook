@@ -32,21 +32,20 @@ public class AuthStudentController {
         StudentService service = LoggedStudent.getStudentService();
         student = service.readByLogin(login);
 
-        if (student.getLogin().equals("null")) {
+        if (studentDoesNotExist()) {
             return invalidLogin();
         }
 
-        if (student.getPassword().equals(password)) {
-            return signIn();
+        if (passwordIsNotCorrect(password)) {
+            return invalidPassword();
         }
 
-        return invalidPassword();
+        return signIn();
     }
 
-    private String signIn() {
-        LoggedStudent.setLogin(login);
-        LoggedStudent.setStudent(student);
-        return "redirect:/accountStudent";
+
+    private boolean studentDoesNotExist() {
+        return student.getLogin().equals("null");
     }
 
     private String invalidLogin() {
@@ -54,8 +53,18 @@ public class AuthStudentController {
         return PATH;
     }
 
+    private boolean passwordIsNotCorrect(String password) {
+        return !student.getPassword().equals(password);
+    }
+
     private String invalidPassword() {
         model.addAttribute("Error", "Неверный пароль, попробуйте ещё раз");
         return PATH;
+    }
+
+    private String signIn() {
+        LoggedStudent.setLogin(login);
+        LoggedStudent.setStudent(student);
+        return "redirect:/accountStudent";
     }
 }

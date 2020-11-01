@@ -17,17 +17,20 @@ public class TeacherService {
     }
 
     public Teacher readByName(String firstName, String secondName) {
-        return DAO.readByName(firstName, secondName);
+        Teacher teacher = DAO.readByName(firstName, secondName);
+        return nullCheck(teacher);
     }
 
     public Teacher readByLogin(String login) {
+        Teacher teacher = DAO.readByLogin(login);
+        return nullCheck(teacher);
+    }
 
-        if (DAO.readByLogin(login) == null) {
-            Teacher teacher = new Teacher();
+    private Teacher nullCheck(Teacher teacher) {
+        if (teacher == null) {
+            teacher = new Teacher();
             teacher.setLogin("null");
-            return teacher;
         }
-
-        return DAO.readByLogin(login);
+        return teacher;
     }
 }

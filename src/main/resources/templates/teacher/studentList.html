@@ -42,8 +42,8 @@
         </td>
         <td class="right">
             <a style="font-size: 30px" th:each="id : ${IDs}"
-               th:utext="' ссылка на задания &lt;br /&gt;'"
-               th:href="@{|/tasksByID?id=${id}|}">
+               th:href="@{|/tasksByID?id=${id}|}"
+               th:utext="' ссылка на задания &lt;br /&gt;'">
             </a>
         </td>
     </tr>
