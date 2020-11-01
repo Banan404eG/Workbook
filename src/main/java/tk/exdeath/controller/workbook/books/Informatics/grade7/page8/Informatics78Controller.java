@@ -12,7 +12,7 @@ import tk.exdeath.model.workbooks.Informatics.grade7.page8.Informatics78;
 @Controller
 public class Informatics78Controller {
 
-    private final String TABLE_NAME = "inf7_8";
+    private final String TABLE_NAME = "Информатика 7 класс, стр 8";
 
     @PostMapping("/informatics78")
     public String informatics78(

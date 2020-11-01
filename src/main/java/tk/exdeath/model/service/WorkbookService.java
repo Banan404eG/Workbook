@@ -17,4 +17,8 @@ public class WorkbookService<E> {
     public void delete(E workbook) {
         DAO.delete(workbook);
     }
+
+    public Object read(E workbook, int id) {
+        return DAO.read(workbook, id);
+    }
 }

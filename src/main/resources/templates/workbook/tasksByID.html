@@ -10,12 +10,12 @@
             text-align: center;
         }
 
-        table.students {
+        table.tasks {
             width: 100%;
             border-spacing: 0;
         }
 
-        table.students td {
+        table.tasks td {
             width: 50%;
             vertical-align: top;
         }
@@ -37,15 +37,15 @@
 <h1 th:text="'Список заданий ученика: ' + ${Name}"></h1>
 <h1 th:text="${Error}"></h1>
 
-<table class="students">
+<table class="tasks">
     <tr>
         <td class="left">
-            <li style="font-size: 30px" th:each="task : ${tasks}" th:text="${task}"></li>
+            <li style="font-size: 30px" th:each="name : ${taskNames}" th:text="${name}"></li>
         </td>
         <td class="right">
             <a style="font-size: 30px" th:each="id : ${IDs}"
-               th:href="@{|/tasksByID?id=${id}|}"
-               th:utext="' ссылка на задания &lt;br /&gt;'">
+               th:href="@{|/taskByID?id=${id}|}"
+               th:utext="' ссылка на задание &lt;br /&gt;'">
             </a>
         </td>
     </tr>

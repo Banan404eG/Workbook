@@ -69,6 +69,9 @@ public class Informatics78 implements Serializable {
                 "\n" + four91 + ", " + four92;
     }
 
+    public Informatics78() {
+    }
+
     public Informatics78(String three1, String three2, String four11, String four12, String four21, String four22, String four31, String four32, String four41, String four42, String four51, String four52, String four61, String four62, String four71, String four72, String four81, String four82, String four91, String four92, int studentID) {
         this.three1 = three1;
         this.three2 = three2;

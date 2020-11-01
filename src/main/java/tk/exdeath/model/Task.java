@@ -28,4 +28,16 @@ public class Task implements Serializable {
         this.taskID = taskID;
         this.tableName = tableName;
     }
+
+    public int getId() {
+        return id;
+    }
+
+    public int getTaskID() {
+        return taskID;
+    }
+
+    public String getTableName() {
+        return tableName;
+    }
 }

@@ -26,6 +26,10 @@ public class WorkbookDAO<E> {
         transaction.commit();
     }
 
+    public Object read(Object object, int id) {
+        return session.get(object.getClass(), id);
+    }
+
     protected void finalize() {
         try {
             session.close();
