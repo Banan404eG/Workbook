@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title> Поиск работ ученика </title>
+    <meta content="text/html; charset=UTF-8" http-equiv="Content-Type">
+    <link rel="stylesheet" th:href="@{webjars/bootstrap/4.2.1/css/bootstrap.min.css}"/>
+    <style>
+        body {
+            padding-top: 5rem;
+            text-align: center;
+        }
+    </style>
+</head>
+<body>
+<h1 th:text="${Error}"></h1>
+
+<h1> Введите имя и фамилию ученика, работы которого хотите посмотреть </h1>
+<form action="/findStudentByName" method="post">
+    <input name="firstName" placeholder="Введите имя: " style="width:50%; height: 50px; font-size: 30px" type="text">
+    <br><br>
+    <input name="secondName" placeholder="Введите фамилию: " style="width:50%; height: 50px; font-size: 30px"
+           type="text">
+    <br><br>
+    <button style="width:25%; height: 50px; font-size: 30px" type="submit">Подтвердить</button>
+</form>
+</body>
+</html>
