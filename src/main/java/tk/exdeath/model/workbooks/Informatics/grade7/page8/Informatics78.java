@@ -58,7 +58,7 @@ public class Informatics78 implements Serializable {
     public String toString() {
         return "Ответы ученика: \n" +
                 "№3 - " + three1 + ", " + three2 +
-                "\n№4\n" + four11 + ", " + four12 +
+                "\n №4 \n" + four11 + ", " + four12 +
                 "\n" + four21 + ", " + four22 +
                 "\n" + four31 + ", " + four32 +
                 "\n" + four41 + ", " + four42 +
@@ -72,7 +72,17 @@ public class Informatics78 implements Serializable {
     public Informatics78() {
     }
 
-    public Informatics78(String three1, String three2, String four11, String four12, String four21, String four22, String four31, String four32, String four41, String four42, String four51, String four52, String four61, String four62, String four71, String four72, String four81, String four82, String four91, String four92, int studentID) {
+    public Informatics78(String three1, String three2,
+                         String four11, String four12,
+                         String four21, String four22,
+                         String four31, String four32,
+                         String four41, String four42,
+                         String four51, String four52,
+                         String four61, String four62,
+                         String four71, String four72,
+                         String four81, String four82,
+                         String four91, String four92,
+                         int studentID) {
         this.three1 = three1;
         this.three2 = three2;
         this.four11 = four11;
