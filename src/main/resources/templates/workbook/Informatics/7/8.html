@@ -41,7 +41,9 @@
         <td class="right">
 
             <div th:if="${role == 'teacher'}">
-                <h1 th:utext="${task}"></h1>
+                <pre>
+                    <h1 th:utext="${task}"></h1>
+                </pre>
             </div>
 
             <div th:unless="${role == 'teacher'}">
