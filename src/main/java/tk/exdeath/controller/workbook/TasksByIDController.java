@@ -50,24 +50,20 @@ public class TasksByIDController {
     }
 
     private void setTasks(List<Task> tasks) {
-        int id, taskID;
         String tableName;
-        TaskInfo taskInfo;
 
         for (Task task : tasks) {
-            id = task.getId();
-            taskID = task.getTaskID();
             tableName = task.getTableName();
             taskNames.add(tableName);
 
-            WorkbookLibrary.setWorkbookAndPage(taskID, tableName);
-            taskInfo = new TaskInfo(
+            WorkbookLibrary.setWorkbookAndPage(task.getTaskID(), tableName);
+
+            IDTask.put(task.getId(), new TaskInfo(
                     WorkbookLibrary.getGrade(),
                     WorkbookLibrary.getPage(),
                     WorkbookLibrary.getLesson(),
                     WorkbookLibrary.getWorkbook(),
-                    tableName);
-            IDTask.put(id, taskInfo);
+                    tableName));
         }
     }
 
@@ -103,14 +99,16 @@ public class TasksByIDController {
     }
 
     private String getRightAnswers(String tableName) {
-        String rightAnswers = "";
+
         for (Task task : studentService.readByID(RIGHT_ANSWERS_USER_ID).getTasks()) {
+
             if (task.getTaskID() == RIGHT_ANSWERS_TASK_ID && task.getTableName().equals(tableName)) {
                 WorkbookLibrary.setWorkbookAndPage(RIGHT_ANSWERS_TASK_ID, tableName);
-                rightAnswers = WorkbookLibrary.getWorkbook().toString();
-                return rightAnswers;
+                return WorkbookLibrary.getWorkbook().toString();
             }
         }
-        return rightAnswers;
+
+        return "";
     }
+
 }
