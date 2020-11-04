@@ -56,8 +56,7 @@ public class Informatics78 implements Serializable {
 
     @Override
     public String toString() {
-        return "Ответы ученика: " +
-                "\n" + "№3 " +
+        return "№3 " +
                 "\n" + three1 + ", " + three2 +
                 "\n" + "№4 " +
                 "\n" + four11 + ", " + four12 +

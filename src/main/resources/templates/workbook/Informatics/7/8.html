@@ -16,7 +16,7 @@
         }
 
         table.workbook td {
-            width: 50%;
+            width: 33%;
             vertical-align: top;
         }
 
@@ -42,7 +42,8 @@
 
             <div th:if="${role == 'teacher'}">
                 <pre>
-                    <h1 th:utext="${task}"></h1>
+                    <h1 style="text-align: center"> Ответы ученика </h1><br>
+                    <h1 th:utext="${workbook}"></h1>
                 </pre>
             </div>
 
@@ -79,8 +80,17 @@
                     <input name="four91" placeholder="Ответ: " type="text">
                     <input name="four92" placeholder="Ответ: " type="text"><br>
                     <br><br>
-                    <button type="submit">Подтвердить</button>
+                    <button type="submit"> Подтвердить </button>
                 </form>
+            </div>
+        </td>
+
+        <td class="right">
+            <div th:if="${role == 'teacher'}">
+                <pre>
+                    <h1 style="text-align: center"> Правильные ответы </h1><br>
+                    <h1 th:utext="${rightAnswers}"></h1>
+                </pre>
             </div>
         </td>
     </tr>

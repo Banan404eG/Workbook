@@ -16,19 +16,19 @@ import java.util.Map;
 @Controller
 public class TasksByIDController {
 
+    final int RIGHT_ANSWERS_USER_ID = 4;
+    final int RIGHT_ANSWERS_TASK_ID = 1;
     final String PATH = "workbook/tasksByID";
 
+    StudentService studentService;
+    private final Map<Integer, TaskInfo> IDTask = new HashMap<>();
     private final List<String> taskNames = new ArrayList<>();
-    private final Map<Integer, Object> IDWorkbook = new HashMap<>();
-    private final Map<Integer, String> IDLesson = new HashMap<>();
-    private final Map<Integer, Integer> IDGrade = new HashMap<>();
-    private final Map<Integer, Integer> IDPage = new HashMap<>();
 
     @GetMapping("/tasksByID")
     public String tasksByID(
             @RequestParam int id, Model model) {
 
-        StudentService studentService = new StudentService();
+        studentService = new StudentService();
         Student student = studentService.readByID(id);
 
         if (studentDoesNotExist(student)) {
@@ -40,7 +40,7 @@ public class TasksByIDController {
 
         model.addAttribute("Name", student.getFirstName() + " " + student.getSecondName());
         model.addAttribute("taskNames", taskNames);
-        model.addAttribute("IDs", IDWorkbook.keySet());
+        model.addAttribute("IDs", IDTask.keySet());
         return PATH;
     }
 
@@ -50,19 +50,39 @@ public class TasksByIDController {
     }
 
     private void setTasks(List<Task> tasks) {
-        int id;
+        int id, taskID;
         String tableName;
+        TaskInfo taskInfo;
 
         for (Task task : tasks) {
             id = task.getId();
+            taskID = task.getTaskID();
             tableName = task.getTableName();
             taskNames.add(tableName);
 
-            WorkbookLibrary.setWorkbookAndPage(task.getTaskID(), tableName);
-            IDWorkbook.put(id, WorkbookLibrary.getWorkbook());
-            IDLesson.put(id, WorkbookLibrary.getLesson());
-            IDGrade.put(id, WorkbookLibrary.getGrade());
-            IDPage.put(id, WorkbookLibrary.getPage());
+            WorkbookLibrary.setWorkbookAndPage(taskID, tableName);
+            taskInfo = new TaskInfo(
+                    WorkbookLibrary.getGrade(),
+                    WorkbookLibrary.getPage(),
+                    WorkbookLibrary.getLesson(),
+                    WorkbookLibrary.getWorkbook(),
+                    tableName);
+            IDTask.put(id, taskInfo);
+        }
+    }
+
+
+    private static class TaskInfo {
+        int grade, page;
+        String tableName, lesson;
+        Object workbook;
+
+        public TaskInfo(int grade, int page, String lesson, Object workbook, String tableName) {
+            this.grade = grade;
+            this.page = page;
+            this.tableName = tableName;
+            this.lesson = lesson;
+            this.workbook = workbook;
         }
     }
 
@@ -71,12 +91,26 @@ public class TasksByIDController {
     public String taskByID(
             @RequestParam int id, Model model) {
 
-        String lesson = IDLesson.get(id);
-        int grade = IDGrade.get(id);
-        int page = IDPage.get(id);
+        TaskInfo taskInfo = IDTask.get(id);
+        String lesson = taskInfo.lesson;
+        int grade = taskInfo.grade;
+        int page = taskInfo.page;
 
-        model.addAttribute("task", IDWorkbook.get(id));
+        model.addAttribute("workbook", IDTask.get(id).workbook);
         model.addAttribute("role", "teacher");
+        model.addAttribute("rightAnswers", getRightAnswers(taskInfo.tableName));
         return "workbook/" + lesson + "/" + grade + "/" + page;
+    }
+
+    private String getRightAnswers(String tableName) {
+        String rightAnswers = "";
+        for (Task task : studentService.readByID(RIGHT_ANSWERS_USER_ID).getTasks()) {
+            if (task.getTaskID() == RIGHT_ANSWERS_TASK_ID && task.getTableName().equals(tableName)) {
+                WorkbookLibrary.setWorkbookAndPage(RIGHT_ANSWERS_TASK_ID, tableName);
+                rightAnswers = WorkbookLibrary.getWorkbook().toString();
+                return rightAnswers;
+            }
+        }
+        return rightAnswers;
     }
 }
