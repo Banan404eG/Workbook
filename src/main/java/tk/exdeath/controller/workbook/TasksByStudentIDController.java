@@ -14,19 +14,18 @@ import java.util.List;
 import java.util.Map;
 
 @Controller
-public class TasksByIDController {
+public class TasksByStudentIDController {
 
-    final String PATH = "workbook/tasksByID";
+    final String PATH = "workbook/tasksByStudentID";
 
-    StudentService studentService;
-    private final Map<Integer, TaskInfo> IDsTasks = new HashMap<>();
-    private final List<String> taskNames = new ArrayList<>();
+    private Map<Integer, TaskInfo> IDsTasks;
+    private List<String> taskNames;
 
-    @GetMapping("/tasksByID")
+    @GetMapping("/tasksByStudentID")
     public String tasksByID(
             @RequestParam int id, Model model) {
 
-        studentService = new StudentService();
+        StudentService studentService = new StudentService();
         Student student = studentService.readByID(id);
 
         if (studentDoesNotExist(student)) {
@@ -48,6 +47,8 @@ public class TasksByIDController {
     }
 
     private void setTasks(List<Task> tasks) {
+        IDsTasks = new HashMap<>();
+        taskNames = new ArrayList<>();
 
         for (Task task : tasks) {
             String tableName = task.getTableName();
@@ -87,14 +88,11 @@ public class TasksByIDController {
             @RequestParam int id, Model model) {
 
         TaskInfo taskInfo = IDsTasks.get(id);
-        String lesson = taskInfo.lesson;
-        int grade = taskInfo.grade;
-        int page = taskInfo.page;
 
         model.addAttribute("studentAnswers", taskInfo.studentAnswers);
         model.addAttribute("role", "teacher");
         model.addAttribute("rightAnswers", taskInfo.rightAnswers);
-        return "workbook/" + lesson + "/" + grade + "/" + page;
+        return "workbook/" + taskInfo.lesson + "/" + taskInfo.grade + "/" + taskInfo.page;
     }
 
 }

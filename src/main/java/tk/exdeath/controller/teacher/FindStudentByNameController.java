@@ -31,7 +31,7 @@ public class FindStudentByNameController {
             return PATH;
         }
 
-        return "redirect:/tasksByID?id=" + student.getStudentID();
+        return "redirect:/tasksByStudentID?id=" + student.getStudentID();
     }
 
     private boolean studentDoesNotExist(Student student) {
