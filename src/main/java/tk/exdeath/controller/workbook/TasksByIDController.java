@@ -48,13 +48,12 @@ public class TasksByIDController {
     }
 
     private void setTasks(List<Task> tasks) {
-        String tableName;
 
         for (Task task : tasks) {
-            tableName = task.getTableName();
+            String tableName = task.getTableName();
             taskNames.add(tableName);
 
-            WorkbookLibrary.setWorkbookAndPage(task.getTaskID(), tableName);
+            WorkbookLibrary.setWorkbook(task.getTaskID(), tableName);
 
             IDsTasks.put(task.getId(), new TaskInfo(
                     WorkbookLibrary.getGrade(),

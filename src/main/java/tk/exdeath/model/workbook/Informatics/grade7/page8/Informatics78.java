@@ -1,4 +1,4 @@
-package tk.exdeath.model.workbooks.Informatics.grade7.page8;
+package tk.exdeath.model.workbook.Informatics.grade7.page8;
 
 import javax.persistence.*;
 import java.io.Serializable;

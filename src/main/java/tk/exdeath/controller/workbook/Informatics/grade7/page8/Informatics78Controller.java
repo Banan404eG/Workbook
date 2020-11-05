@@ -1,4 +1,4 @@
-package tk.exdeath.controller.workbook.books.Informatics.grade7.page8;
+package tk.exdeath.controller.workbook.Informatics.grade7.page8;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -7,7 +7,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import tk.exdeath.controller.student.LoggedStudent;
 import tk.exdeath.model.Task;
 import tk.exdeath.model.service.WorkbookService;
-import tk.exdeath.model.workbooks.Informatics.grade7.page8.Informatics78;
+import tk.exdeath.model.workbook.Informatics.grade7.page8.Informatics78;
 
 @Controller
 public class Informatics78Controller {

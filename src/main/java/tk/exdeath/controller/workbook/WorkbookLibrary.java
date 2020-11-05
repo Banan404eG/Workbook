@@ -1,7 +1,7 @@
 package tk.exdeath.controller.workbook;
 
 import tk.exdeath.model.service.WorkbookService;
-import tk.exdeath.model.workbooks.Informatics.grade7.page8.Informatics78;
+import tk.exdeath.model.workbook.Informatics.grade7.page8.Informatics78;
 
 public abstract class WorkbookLibrary {
     static final int RIGHT_ANSWERS_TASK_ID = 1;
@@ -12,7 +12,7 @@ public abstract class WorkbookLibrary {
     private static Object studentAnswers;
     private static Object rightAnswers;
 
-    public static void setWorkbookAndPage(int taskID, String tableName) {
+    public static void setWorkbook(int taskID, String tableName) {
         switch (tableName) {
             case "Информатика 7 класс, стр 8": {
                 WorkbookService<Informatics78> workbookService = new WorkbookService<>();

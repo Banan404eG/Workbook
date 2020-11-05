@@ -6,7 +6,7 @@ import org.hibernate.cfg.Configuration;
 import tk.exdeath.model.Student;
 import tk.exdeath.model.Task;
 import tk.exdeath.model.Teacher;
-import tk.exdeath.model.workbooks.Informatics.grade7.page8.Informatics78;
+import tk.exdeath.model.workbook.Informatics.grade7.page8.Informatics78;
 
 
 public class HibernateFactory {
