@@ -16,12 +16,10 @@ import java.util.Map;
 @Controller
 public class TasksByIDController {
 
-    final int RIGHT_ANSWERS_USER_ID = 4;
-    final int RIGHT_ANSWERS_TASK_ID = 1;
     final String PATH = "workbook/tasksByID";
 
     StudentService studentService;
-    private final Map<Integer, TaskInfo> IDTask = new HashMap<>();
+    private final Map<Integer, TaskInfo> IDsTasks = new HashMap<>();
     private final List<String> taskNames = new ArrayList<>();
 
     @GetMapping("/tasksByID")
@@ -40,7 +38,7 @@ public class TasksByIDController {
 
         model.addAttribute("Name", student.getFirstName() + " " + student.getSecondName());
         model.addAttribute("taskNames", taskNames);
-        model.addAttribute("IDs", IDTask.keySet());
+        model.addAttribute("IDs", IDsTasks.keySet());
         return PATH;
     }
 
@@ -58,12 +56,13 @@ public class TasksByIDController {
 
             WorkbookLibrary.setWorkbookAndPage(task.getTaskID(), tableName);
 
-            IDTask.put(task.getId(), new TaskInfo(
+            IDsTasks.put(task.getId(), new TaskInfo(
                     WorkbookLibrary.getGrade(),
                     WorkbookLibrary.getPage(),
                     WorkbookLibrary.getLesson(),
-                    WorkbookLibrary.getWorkbook(),
-                    tableName));
+                    tableName,
+                    WorkbookLibrary.getStudentAnswers(),
+                    WorkbookLibrary.getRightAnswers()));
         }
     }
 
@@ -71,14 +70,15 @@ public class TasksByIDController {
     private static class TaskInfo {
         int grade, page;
         String tableName, lesson;
-        Object workbook;
+        Object studentAnswers, rightAnswers;
 
-        public TaskInfo(int grade, int page, String lesson, Object workbook, String tableName) {
+        public TaskInfo(int grade, int page, String lesson, String tableName, Object studentAnswers, Object rightAnswers) {
             this.grade = grade;
             this.page = page;
             this.tableName = tableName;
             this.lesson = lesson;
-            this.workbook = workbook;
+            this.studentAnswers = studentAnswers;
+            this.rightAnswers = rightAnswers;
         }
     }
 
@@ -87,28 +87,15 @@ public class TasksByIDController {
     public String taskByID(
             @RequestParam int id, Model model) {
 
-        TaskInfo taskInfo = IDTask.get(id);
+        TaskInfo taskInfo = IDsTasks.get(id);
         String lesson = taskInfo.lesson;
         int grade = taskInfo.grade;
         int page = taskInfo.page;
 
-        model.addAttribute("workbook", IDTask.get(id).workbook);
+        model.addAttribute("studentAnswers", taskInfo.studentAnswers);
         model.addAttribute("role", "teacher");
-        model.addAttribute("rightAnswers", getRightAnswers(taskInfo.tableName));
+        model.addAttribute("rightAnswers", taskInfo.rightAnswers);
         return "workbook/" + lesson + "/" + grade + "/" + page;
-    }
-
-    private String getRightAnswers(String tableName) {
-
-        for (Task task : studentService.readByID(RIGHT_ANSWERS_USER_ID).getTasks()) {
-
-            if (task.getTaskID() == RIGHT_ANSWERS_TASK_ID && task.getTableName().equals(tableName)) {
-                WorkbookLibrary.setWorkbookAndPage(RIGHT_ANSWERS_TASK_ID, tableName);
-                return WorkbookLibrary.getWorkbook().toString();
-            }
-        }
-
-        return "";
     }
 
 }
