@@ -40,7 +40,7 @@
 
         <td class="right">
 
-            <div th:if="${role == 'teacher'}">
+            <div th:if="${role == 'teacher' or role == 'watcher'}">
                 <pre>
                     <h1 style="text-align: center"> Ответы ученика </h1><br>
                     <h1 th:utext="${studentAnswers}"></h1>
@@ -80,7 +80,7 @@
                     <input name="four91" placeholder="Ответ: " type="text">
                     <input name="four92" placeholder="Ответ: " type="text"><br>
                     <br><br>
-                    <button type="submit"> Подтвердить </button>
+                    <button type="submit"> Подтвердить</button>
                 </form>
             </div>
         </td>
