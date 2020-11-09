@@ -8,6 +8,8 @@ import java.util.Set;
 @Table(name = "workbook.teachers")
 public class Teacher implements Serializable {
 
+    private static final long serialVersionUID = 1;
+
     @ManyToMany(cascade = CascadeType.ALL)
     @JoinTable(name = "workbook.teachers_students",
             joinColumns = @JoinColumn(name = "teacher_id"),

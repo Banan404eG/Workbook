@@ -8,6 +8,8 @@ import java.util.List;
 @Table(name = "workbook.students")
 public class Student implements Serializable {
 
+    private static final long serialVersionUID = 1;
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "student_id")

@@ -7,27 +7,25 @@ import java.io.Serializable;
 @Table(name = "workbook.tasks")
 public class Task implements Serializable {
 
+    private static final long serialVersionUID = 1;
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id")
     private int id;
+    @Column(name = "lesson")
+    private String lesson;
+    @Column(name = "grade")
+    private int grade;
+    @Column(name = "page")
+    private int page;
+    @OrderColumn(name = "answers")
+    private String[] answers;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "student_id")
     private Student student;
 
-    @Column(name = "lesson")
-    private String lesson;
-
-    @Column(name = "grade")
-    private int grade;
-
-    @Column(name = "page")
-    private int page;
-
-
-    @OrderColumn(name = "answers")
-    private String[] answers;
 
     public Task() {
     }
