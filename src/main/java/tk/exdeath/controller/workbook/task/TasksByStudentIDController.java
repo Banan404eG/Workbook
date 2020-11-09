@@ -34,6 +34,7 @@ public class TasksByStudentIDController {
         model.addAttribute("Name", student.getFirstName() + " " + student.getSecondName());
         model.addAttribute("tableNames", tableNames(tasks));
         model.addAttribute("IDs", IDs(tasks));
+        model.addAttribute("studentID", id);
         return PATH;
     }
 

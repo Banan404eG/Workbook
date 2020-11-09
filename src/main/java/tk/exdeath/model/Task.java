@@ -1,5 +1,7 @@
 package tk.exdeath.model;
 
+import org.hibernate.annotations.Type;
+
 import javax.persistence.*;
 import java.io.Serializable;
 
@@ -19,7 +21,8 @@ public class Task implements Serializable {
     private int grade;
     @Column(name = "page")
     private int page;
-    @OrderColumn(name = "answers")
+    @Column(columnDefinition = "varchar[]")
+    @Type(type = "tk.exdeath.model.SqlStringArray")
     private String[] answers;
 
     @ManyToOne(fetch = FetchType.LAZY)

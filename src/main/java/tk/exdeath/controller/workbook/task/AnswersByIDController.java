@@ -15,9 +15,11 @@ public class AnswersByIDController {
     public String taskByID(@RequestParam int studentID,
             @RequestParam int id, Model model) {
 
-        StudentService studentService = new StudentService();
-
-        Task task = studentService.readByID(studentID).getTasks().get(id);
+        Task task = getTask(studentID, id);
+        if (task == null) {
+            model.addAttribute("Error", "Неверный ID");
+            return "errorPage";
+        }
 
         if (LoggedTeacher.getTeacher() != null) {
             model.addAttribute("role", "teacher");
@@ -27,5 +29,15 @@ public class AnswersByIDController {
         model.addAttribute("studentAnswers", task.getAnswers());
         //model.addAttribute("rightAnswers", taskInfo.rightAnswers);
         return "workbook/" + task.getLesson() + "/" + task.getGrade() + "/" + task.getPage();
+    }
+
+    private Task getTask(int studentID, int id) {
+        StudentService studentService = new StudentService();
+        for (Task task : studentService.readByID(studentID).getTasks()) {
+            if (task.getId() == id) {
+                return task;
+            }
+        }
+        return null;
     }
 }

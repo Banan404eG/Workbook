@@ -43,7 +43,7 @@
             <div th:if="${role == 'teacher' or role == 'watcher'}">
                 <pre>
                     <h1 style="text-align: center"> Ответы ученика </h1><br>
-                    <h1 th:utext="${studentAnswers}"></h1>
+                    <li style="font-size: 30px" th:each="answer : ${studentAnswers}" th:utext="${answer}"></li>
                 </pre>
             </div>
 
