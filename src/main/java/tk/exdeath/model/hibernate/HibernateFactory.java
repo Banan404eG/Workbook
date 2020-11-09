@@ -3,10 +3,9 @@ package tk.exdeath.model.hibernate;
 import org.hibernate.SessionFactory;
 import org.hibernate.boot.registry.StandardServiceRegistryBuilder;
 import org.hibernate.cfg.Configuration;
-import tk.exdeath.model.Student;
 import tk.exdeath.model.Task;
+import tk.exdeath.model.Student;
 import tk.exdeath.model.Teacher;
-import tk.exdeath.model.workbook.Informatics.grade7.page8.Informatics78;
 
 
 public class HibernateFactory {
@@ -23,8 +22,6 @@ public class HibernateFactory {
                 config.addAnnotatedClass(Student.class);
                 config.addAnnotatedClass(Teacher.class);
                 config.addAnnotatedClass(Task.class);
-                addWorkbooks(config);
-
                 StandardServiceRegistryBuilder builder = new StandardServiceRegistryBuilder().applySettings(config.getProperties());
                 sessionFactory = config.buildSessionFactory(builder.build());
             } catch (Exception ex) {
@@ -35,7 +32,4 @@ public class HibernateFactory {
     }
 
 
-    private static void addWorkbooks(Configuration config) {
-        config.addAnnotatedClass(Informatics78.class);
-    }
 }

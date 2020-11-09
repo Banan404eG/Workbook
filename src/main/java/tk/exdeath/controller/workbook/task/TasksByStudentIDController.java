@@ -5,7 +5,11 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import tk.exdeath.model.Student;
+import tk.exdeath.model.Task;
 import tk.exdeath.model.service.StudentService;
+
+import java.util.ArrayList;
+import java.util.List;
 
 @Controller
 public class TasksByStudentIDController {
@@ -25,16 +29,32 @@ public class TasksByStudentIDController {
             return PATH;
         }
 
-        TaskLibrary.setTasks(student.getTasks());
+        List<Task> tasks = student.getTasks();
 
         model.addAttribute("Name", student.getFirstName() + " " + student.getSecondName());
-        model.addAttribute("taskNames", TaskLibrary.getTaskNames());
-        model.addAttribute("IDs", TaskLibrary.getIDs());
+        model.addAttribute("tableNames", tableNames(tasks));
+        model.addAttribute("IDs", IDs(tasks));
         return PATH;
     }
 
 
     private boolean studentDoesNotExist(Student student) {
         return student.getLogin().equals("null");
+    }
+
+    private List<Integer> IDs(List<Task> tasks) {
+        List<Integer> IDs = new ArrayList<>();
+        for (Task task : tasks) {
+            IDs.add(task.getId());
+        }
+        return IDs;
+    }
+
+    private List<String> tableNames(List<Task> tasks) {
+        List<String> tableNames = new ArrayList<>();
+        for (Task task : tasks) {
+            tableNames.add(task.getTableName());
+        }
+        return tableNames;
     }
 }

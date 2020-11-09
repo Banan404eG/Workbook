@@ -11,33 +11,60 @@ public class Task implements Serializable {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id")
     private int id;
-    @Column(name = "task_id")
-    private int taskID;
-    @Column(name = "table_name")
-    private String tableName;
+
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "student_id")
     private Student student;
 
-    public Task() {
+    @Column(name = "lesson")
+    private String lesson;
 
+    @Column(name = "grade")
+    private int grade;
+
+    @Column(name = "page")
+    private int page;
+
+
+    @OrderColumn(name = "answers")
+    private String[] answers;
+
+    public Task() {
     }
 
-    public Task(Student student, int taskID, String tableName) {
+    public Task(Student student, String lesson, int grade, int page, String[] answers) {
         this.student = student;
-        this.taskID = taskID;
-        this.tableName = tableName;
+        this.lesson = lesson;
+        this.grade = grade;
+        this.page = page;
+        this.answers = answers;
+    }
+
+    public String[] getAnswers() {
+        return answers;
+    }
+
+    public int getStudentID() {
+        return student.getStudentID();
     }
 
     public int getId() {
         return id;
     }
 
-    public int getTaskID() {
-        return taskID;
+    public String getLesson() {
+        return lesson;
+    }
+
+    public int getGrade() {
+        return grade;
+    }
+
+    public int getPage() {
+        return page;
     }
 
     public String getTableName() {
-        return tableName;
+        return lesson + ", класс: " + grade + ", страница: " + page;
     }
 }
