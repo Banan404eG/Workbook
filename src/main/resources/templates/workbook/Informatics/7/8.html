@@ -92,7 +92,7 @@
             <div th:if="${role == 'teacher'}">
                 <pre>
                     <h1 style="text-align: center"> Правильные ответы </h1><br>
-                    <h1 th:utext="${rightAnswers}"></h1>
+                    <li style="font-size: 30px" th:each="answer : ${rightAnswers}" th:utext="${answer}"></li>
                 </pre>
             </div>
         </td>
