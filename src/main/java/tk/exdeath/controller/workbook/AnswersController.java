@@ -4,26 +4,24 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
-
-import java.util.ArrayList;
-import java.util.Arrays;
+import tk.exdeath.controller.student.LoggedStudent;
+import tk.exdeath.model.Student;
+import tk.exdeath.model.Task;
 
 @Controller
 public class AnswersController {
 
     @PostMapping("/answers")
     public String answers(
-            @RequestParam(required = false, value = "answers[]") String[] studentAnswers,
-            @RequestParam() String lesson, @RequestParam() int grade, @RequestParam() int page, Model model) {
+            @RequestParam(required = false, value = "answers[]") String[] answers,
+            @RequestParam() String lesson,
+            @RequestParam() int grade,
+            @RequestParam() int page, Model model) {
 
-
-        //int studentID = LoggedStudent.getStudent().getStudentID();
-
-        ArrayList<String> answers = new ArrayList<>(Arrays.asList(studentAnswers));
-
-        answers.add(lesson);
-        answers.add(String.valueOf(grade));
-        answers.add(String.valueOf(page));
+        Student student = LoggedStudent.getStudent();
+        Task task = new Task(student, lesson, grade, page, answers);
+        student.addTask(task);
+        LoggedStudent.update();
 
         model.addAttribute("Error", answers);
         return "errorPage";
