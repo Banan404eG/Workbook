@@ -26,7 +26,7 @@ public class DeleteTeacher {
     }
 
     @PostMapping("/deleteTeacher")
-    public String addStudent(
+    public String deleteTeacher(
             @RequestParam String login, Model model) {
 
         teacherService = new TeacherService();

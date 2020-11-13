@@ -9,7 +9,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 @Controller
-public class StudentListController {
+public class StudentList {
 
     @GetMapping("/studentList")
     public String studentList(Model model) {

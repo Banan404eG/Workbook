@@ -12,7 +12,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 @Controller
-public class FindStudentByNameController {
+public class FindStudentByName {
 
     final String PATH = "teacher/findStudentByName";
 

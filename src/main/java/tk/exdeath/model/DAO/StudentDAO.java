@@ -18,4 +18,6 @@ public interface StudentDAO {
     Student readByLogin(String login);
 
     Student readByID(int id);
+
+    void closeSession();
 }

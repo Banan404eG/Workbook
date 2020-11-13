@@ -9,7 +9,7 @@ import tk.exdeath.model.Student;
 import tk.exdeath.model.Task;
 
 @Controller
-public class AnswersController {
+public class AddStudentAnswers {
 
     @PostMapping("/answers")
     public String answers(

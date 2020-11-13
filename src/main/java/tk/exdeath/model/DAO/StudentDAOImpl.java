@@ -65,6 +65,11 @@ public class StudentDAOImpl implements StudentDAO {
         return session.get(Student.class, id);
     }
 
+    @Override
+    public void closeSession() {
+        session.close();
+    }
+
     protected void finalize() {
         try {
             session.close();

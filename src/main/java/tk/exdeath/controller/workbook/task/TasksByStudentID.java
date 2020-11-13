@@ -12,7 +12,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 @Controller
-public class TasksByStudentIDController {
+public class TasksByStudentID {
 
     final String PATH = "workbook/tasksByStudentID";
 

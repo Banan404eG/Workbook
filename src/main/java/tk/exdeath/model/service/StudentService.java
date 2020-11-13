@@ -43,4 +43,8 @@ public class StudentService {
         }
         return student;
     }
+
+    public void closeSession() {
+        DAO.closeSession();
+    }
 }

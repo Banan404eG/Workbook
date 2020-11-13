@@ -1,38 +1,38 @@
-package tk.exdeath.controller.student;
+package tk.exdeath.controller.teacher;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
-import tk.exdeath.model.Student;
-import tk.exdeath.model.service.StudentService;
+import tk.exdeath.model.Teacher;
+import tk.exdeath.model.service.TeacherService;
 
 @Controller
-public class AuthStudentController {
+public class AuthTeacher {
 
-    final String PATH = "student/authStudent";
+    final String PATH = "teacher/authTeacher";
 
-    Student student;
+    Teacher teacher;
     String login;
     Model model;
 
-    @GetMapping("/authStudent")
+    @GetMapping("/authTeacher")
     public String auth() {
         return PATH;
     }
 
-    @PostMapping("/authStudent")
+    @PostMapping("/authTeacher")
     public String passCheck(
             @RequestParam String login,
             @RequestParam String password, Model model) {
 
         this.login = login;
         this.model = model;
-        StudentService service = LoggedStudent.getStudentService();
-        student = service.readByLogin(login);
+        TeacherService service = LoggedTeacher.getTeacherService();
+        teacher = service.readByLogin(login);
 
-        if (studentDoesNotExist()) {
+        if (teacherDoesNotExist()) {
             return invalidLogin();
         }
 
@@ -44,8 +44,8 @@ public class AuthStudentController {
     }
 
 
-    private boolean studentDoesNotExist() {
-        return student.getLogin().equals("null");
+    private boolean teacherDoesNotExist() {
+        return teacher.getLogin().equals("null");
     }
 
     private String invalidLogin() {
@@ -54,7 +54,7 @@ public class AuthStudentController {
     }
 
     private boolean passwordIsNotCorrect(String password) {
-        return !student.getPassword().equals(password);
+        return !teacher.getPassword().equals(password);
     }
 
     private String invalidPassword() {
@@ -63,8 +63,8 @@ public class AuthStudentController {
     }
 
     private String signIn() {
-        LoggedStudent.setLogin(login);
-        LoggedStudent.setStudent(student);
-        return "redirect:/accountStudent";
+        LoggedTeacher.setLogin(login);
+        LoggedTeacher.setTeacher(teacher);
+        return "redirect:/accountTeacher";
     }
 }

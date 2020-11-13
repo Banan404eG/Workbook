@@ -9,7 +9,7 @@ import tk.exdeath.model.Task;
 import tk.exdeath.model.service.StudentService;
 
 @Controller
-public class AnswersByIDController {
+public class AnswersByID {
 
     final int RIGHT_ANSWERS_STUDENT_ID = 4;
 
@@ -18,7 +18,7 @@ public class AnswersByIDController {
     String lesson;
     int grade, page;
 
-    @GetMapping("/taskByID")
+    @GetMapping("/answersByID")
     public String taskByID(@RequestParam int studentID,
                            @RequestParam int id, Model model) {
 
