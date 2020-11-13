@@ -16,7 +16,18 @@
     </style>
 </head>
 <body>
-
-
+<a th:href="@{|/addStudent?key=${key}|}"> Добавить ученика </a>
+<br>
+<a th:href="@{|/addTeacher?key=${key}|}"> Добавить учителя </a>
+<br>
+<a th:href="@{|/addPage?key=${key}|}"> Добавить страницу </a>
+<br><br><br>
+<a th:href="@{|/deleteStudent?key=${key}|}"> Удалить ученика </a>
+<br>
+<a th:href="@{|/deleteTeacher?key=${key}|}"> Удалить учителя </a>
+<br>
+<a th:href="@{|/deletePage?key=${key}|}"> Удалить страницу </a>
+<br>
+<a th:href="@{|/mapStudentTeacher?key=${key}|}"> Добавить ученика к учителю </a>
 </body>
 </html>

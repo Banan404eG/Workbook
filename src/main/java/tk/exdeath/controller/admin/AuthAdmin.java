@@ -10,15 +10,12 @@ import org.springframework.web.bind.annotation.RequestParam;
 public class AuthAdmin {
 
     final String PATH = "admin/authAdmin";
-    final String KEY = "O0O-StArTuP-C0MP7NY";
-    final String LOGIN = "1";
-    final String PASSWORD = "1";
 
     @GetMapping("/authAdmin")
     public String auth(
             @RequestParam(defaultValue = "ERROR") String key) {
 
-        if (key.equals(KEY)) {
+        if (LoggedAdmin.isKeyValid(key)) {
             return PATH;
         }
 
@@ -30,8 +27,7 @@ public class AuthAdmin {
             @RequestParam String login,
             @RequestParam String password, Model model) {
 
-        if (login.equals(LOGIN) && password.equals(PASSWORD)) {
-            LoggedAdmin.LogIn();
+        if (LoggedAdmin.isLoginAndPasswordValid(login, password)) {
             return "redirect:/accountAdmin";
         }
 

@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title> Добавление ученика </title>
+    <meta content="text/html; charset=UTF-8" http-equiv="Content-Type">
+    <link rel="stylesheet" th:href="@{webjars/bootstrap/4.2.1/css/bootstrap.min.css}"/>
+    <style>
+        body {
+            padding-top: 5rem;
+            text-align: center;
+        }
+    </style>
+</head>
+<body>
+<h1 th:text="${Message}"></h1>
+
+<form action="/addStudent" method="post">
+    <input name="login" placeholder="Введите логин: " style="width:50%; height: 50px; font-size: 30px" type="text">
+    <br><br>
+    <input name="password" placeholder="Введите пароль: " style="width:50%; height: 50px; font-size: 30px" type="text">
+    <br><br>
+    <input name="firstName" placeholder="Введите имя: " style="width:50%; height: 50px; font-size: 30px" type="text">
+    <br><br>
+    <input name="secondName" placeholder="Введите фамилию: " style="width:50%; height: 50px; font-size: 30px" type="text">
+    <br><br>
+    <input name="studentClass" placeholder="Введите класс: " style="width:50%; height: 50px; font-size: 30px" type="text">
+    <br><br>
+    <button style="width:25%; height: 50px; font-size: 30px" type="submit">Подтвердить</button>
+</form>
+</body>
+</html>

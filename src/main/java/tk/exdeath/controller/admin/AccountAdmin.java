@@ -1,6 +1,7 @@
 package tk.exdeath.controller.admin;
 
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 
 @Controller
@@ -9,10 +10,10 @@ public class AccountAdmin {
     final String PATH = "admin/accountAdmin";
 
     @GetMapping("/accountAdmin")
-    public String account() {
+    public String account(Model model) {
 
         if (LoggedAdmin.isLogged()) {
-            LoggedAdmin.LogOut();
+            model.addAttribute("key", LoggedAdmin.KEY);
             return PATH;
         }
 
