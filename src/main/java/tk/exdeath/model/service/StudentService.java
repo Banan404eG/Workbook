@@ -18,12 +18,11 @@ public class StudentService {
         DAO.update(student);
     }
 
-    public Student readByName(String firstName, String secondName) {
-        Student student = DAO.readByName(firstName, secondName);
-        return nullCheck(student);
+    public void delete(Student student) {
+        DAO.delete(student);
     }
 
-    public List<Student> readListByName(String firstName, String secondName) {
+    public List<Student> readByName(String firstName, String secondName) {
         return DAO.readListByName(firstName, secondName);
     }
 

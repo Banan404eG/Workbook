@@ -33,6 +33,13 @@ public class StudentDAOImpl implements StudentDAO {
     }
 
     @Override
+    public void delete(Student student) {
+        Transaction transaction = session.beginTransaction();
+        session.delete(student);
+        transaction.commit();
+    }
+
+    @Override
     public Student readByName(String firstName, String secondName) {
         Predicate firstNamePredicate = builder.like(root.get("firstName"), firstName);
         Predicate secondNamePredicate = builder.like(root.get("secondName"), secondName);

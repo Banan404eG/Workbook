@@ -27,7 +27,7 @@ public class FindStudentByNameController {
             @RequestParam String secondName, Model model) {
 
         StudentService studentService = new StudentService();
-        List<Student> students = studentService.readListByName(firstName, secondName);
+        List<Student> students = studentService.readByName(firstName, secondName);
 
         if (studentDoesNotExist(students)) {
             model.addAttribute("Error", "Ученика с такими именем и фамилией не существует");

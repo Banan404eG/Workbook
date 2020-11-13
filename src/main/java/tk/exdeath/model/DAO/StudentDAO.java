@@ -9,6 +9,8 @@ public interface StudentDAO {
 
     void update(Student student);
 
+    void delete(Student student);
+
     Student readByName(String firstName, String secondName);
 
     List<Student> readListByName(String firstName, String secondName);
