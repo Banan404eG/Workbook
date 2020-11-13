@@ -4,6 +4,8 @@ import tk.exdeath.model.DAO.StudentDAO;
 import tk.exdeath.model.DAO.StudentDAOImpl;
 import tk.exdeath.model.Student;
 
+import java.util.List;
+
 public class StudentService {
 
     private final StudentDAO DAO = new StudentDAOImpl();
@@ -19,6 +21,10 @@ public class StudentService {
     public Student readByName(String firstName, String secondName) {
         Student student = DAO.readByName(firstName, secondName);
         return nullCheck(student);
+    }
+
+    public List<Student> readListByName(String firstName, String secondName) {
+        return DAO.readListByName(firstName, secondName);
     }
 
     public Student readByLogin(String login) {

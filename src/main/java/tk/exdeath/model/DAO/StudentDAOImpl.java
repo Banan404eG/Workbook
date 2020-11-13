@@ -9,6 +9,7 @@ import javax.persistence.criteria.CriteriaBuilder;
 import javax.persistence.criteria.CriteriaQuery;
 import javax.persistence.criteria.Predicate;
 import javax.persistence.criteria.Root;
+import java.util.List;
 
 public class StudentDAOImpl implements StudentDAO {
 
@@ -37,6 +38,14 @@ public class StudentDAOImpl implements StudentDAO {
         Predicate secondNamePredicate = builder.like(root.get("secondName"), secondName);
 
         return session.createQuery(criteria.select(root).where(firstNamePredicate, secondNamePredicate)).uniqueResult();
+    }
+
+    @Override
+    public List<Student> readListByName(String firstName, String secondName) {
+        Predicate firstNamePredicate = builder.like(root.get("firstName"), firstName);
+        Predicate secondNamePredicate = builder.like(root.get("secondName"), secondName);
+
+        return session.createQuery(criteria.select(root).where(firstNamePredicate, secondNamePredicate)).list();
     }
 
     @Override
