@@ -16,6 +16,10 @@ public class TeacherService {
         DAO.update(teacher);
     }
 
+    public void delete(Teacher teacher) {
+        DAO.delete(teacher);
+    }
+
     public Teacher readByName(String firstName, String secondName) {
         Teacher teacher = DAO.readByName(firstName, secondName);
         return nullCheck(teacher);

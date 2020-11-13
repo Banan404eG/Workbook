@@ -5,16 +5,16 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
-import tk.exdeath.model.service.StudentService;
+import tk.exdeath.model.service.TeacherService;
 
 @Controller
-public class DeleteStudent {
+public class DeleteTeacher {
 
-    final String PATH = "admin/deleteStudent";
+    final String PATH = "admin/deleteTeacher";
 
-    StudentService studentService;
+    TeacherService teacherService;
 
-    @GetMapping("/deleteStudent")
+    @GetMapping("/deleteTeacher")
     public String returnPage(
             @RequestParam(defaultValue = "ERROR") String key, Model model) {
 
@@ -25,24 +25,24 @@ public class DeleteStudent {
         return "errorPage";
     }
 
-    @PostMapping("/deleteStudent")
-    public String deleteStudent(
+    @PostMapping("/deleteTeacher")
+    public String addStudent(
             @RequestParam String login, Model model) {
 
-        studentService = new StudentService();
+        teacherService = new TeacherService();
 
         if (loginIsInvalid(login)) {
-            model.addAttribute("Message", "Ученика с таким логином не существует");
+            model.addAttribute("Message", "Учителя с таким логином не существует");
             return PATH;
         }
 
-        studentService.delete(studentService.readByLogin(login));
+        teacherService.delete(teacherService.readByLogin(login));
 
         model.addAttribute("Message", login + " успешно удален");
         return PATH;
     }
 
     private boolean loginIsInvalid(String login) {
-        return studentService.readByLogin(login).getLogin().equals("null");
+        return teacherService.readByLogin(login).getLogin().equals("null");
     }
 }

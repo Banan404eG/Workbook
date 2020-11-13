@@ -32,6 +32,13 @@ public class TeacherDAOImpl implements TeacherDAO {
     }
 
     @Override
+    public void delete(Teacher teacher) {
+        Transaction transaction = session.beginTransaction();
+        session.delete(teacher);
+        transaction.commit();
+    }
+
+    @Override
     public Teacher readByName(String firstName, String secondName) {
         Predicate firstNamePredicate = builder.like(root.get("firstName"), firstName);
         Predicate secondNamePredicate = builder.like(root.get("secondName"), secondName);
