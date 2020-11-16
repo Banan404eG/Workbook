@@ -1,4 +1,4 @@
-package tk.exdeath.model;
+package tk.exdeath.model.hibernate;
 
 
 import org.hibernate.HibernateException;

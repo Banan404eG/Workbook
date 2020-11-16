@@ -6,6 +6,8 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import tk.exdeath.controller.admin.LoggedAdmin;
+import tk.exdeath.model.Page;
+import tk.exdeath.model.service.PageService;
 
 @Controller
 public class DeletePage {
@@ -39,17 +41,19 @@ public class DeletePage {
             return PATH;
         }
 
+        PageService pageService = new PageService();
+        pageService.delete(pageService.read(lesson, grade, page));
+        pageService.closeSession();
 
         model.addAttribute("Message", lesson + " " + grade + " " + page + " успешно удален");
         return PATH;
     }
 
+    private boolean incorrectInput(String lesson, int grade, int page) {
+        return lesson.equals("null") || grade < 1 || page < 1;
+    }
 
     private boolean pageDoesNotExist(String lesson, int grade, int page) {
         return lesson.equals("null") || grade == 0 || page == 0;
-    }
-
-    private boolean incorrectInput(String lesson, int grade, int page) {
-        return lesson.equals("null") || grade < 1 || page < 1;
     }
 }

@@ -22,7 +22,7 @@ public class Task implements Serializable {
     @Column(name = "page")
     private int page;
     @Column(columnDefinition = "varchar[]")
-    @Type(type = "tk.exdeath.model.SqlStringArray")
+    @Type(type = "tk.exdeath.model.hibernate.SqlStringArray")
     private String[] answers;
 
     @ManyToOne(fetch = FetchType.LAZY)
