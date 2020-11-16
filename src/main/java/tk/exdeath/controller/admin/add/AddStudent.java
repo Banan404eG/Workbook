@@ -1,17 +1,18 @@
-package tk.exdeath.controller.admin;
+package tk.exdeath.controller.admin.add;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import tk.exdeath.controller.admin.LoggedAdmin;
 import tk.exdeath.model.Student;
 import tk.exdeath.model.service.StudentService;
 
 @Controller
 public class AddStudent {
 
-    final String PATH = "admin/addStudent";
+    final String PATH = "admin/add/addStudent";
 
     StudentService studentService;
 

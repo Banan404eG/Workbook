@@ -1,10 +1,11 @@
-package tk.exdeath.controller.admin;
+package tk.exdeath.controller.admin.add;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import tk.exdeath.controller.admin.LoggedAdmin;
 import tk.exdeath.model.Student;
 import tk.exdeath.model.Teacher;
 import tk.exdeath.model.service.StudentService;
@@ -13,9 +14,7 @@ import tk.exdeath.model.service.TeacherService;
 @Controller
 public class MapStudentAndTeacher {
 
-    final String PATH = "admin/mapStudentAndTeacher";
-
-
+    final String PATH = "admin/add/mapStudentAndTeacher";
 
     @GetMapping("/mapStudentAndTeacher")
     public String returnPage(
@@ -32,7 +31,6 @@ public class MapStudentAndTeacher {
     public String mapStudentAndTeacher(
             @RequestParam String studentLogin,
             @RequestParam String teacherLogin, Model model) {
-
 
         StudentService studentService = new StudentService();
         Student student = studentService.readByLogin(studentLogin);

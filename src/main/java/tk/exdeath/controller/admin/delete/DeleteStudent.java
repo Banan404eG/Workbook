@@ -1,20 +1,21 @@
-package tk.exdeath.controller.admin;
+package tk.exdeath.controller.admin.delete;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
-import tk.exdeath.model.service.TeacherService;
+import tk.exdeath.controller.admin.LoggedAdmin;
+import tk.exdeath.model.service.StudentService;
 
 @Controller
-public class DeleteTeacher {
+public class DeleteStudent {
 
-    final String PATH = "admin/deleteTeacher";
+    final String PATH = "admin/delete/deleteStudent";
 
-    TeacherService teacherService;
+    StudentService studentService;
 
-    @GetMapping("/deleteTeacher")
+    @GetMapping("/deleteStudent")
     public String returnPage(
             @RequestParam(defaultValue = "ERROR") String key, Model model) {
 
@@ -25,25 +26,25 @@ public class DeleteTeacher {
         return "errorPage";
     }
 
-    @PostMapping("/deleteTeacher")
-    public String deleteTeacher(
+    @PostMapping("/deleteStudent")
+    public String deleteStudent(
             @RequestParam String login, Model model) {
 
-        teacherService = new TeacherService();
+        studentService = new StudentService();
 
         if (loginIsInvalid(login)) {
-            model.addAttribute("Message", "Учителя с таким логином не существует");
+            model.addAttribute("Message", "Ученика с таким логином не существует");
             return PATH;
         }
 
-        teacherService.delete(teacherService.readByLogin(login));
-        teacherService.closeSession();
+        studentService.delete(studentService.readByLogin(login));
+        studentService.closeSession();
 
         model.addAttribute("Message", login + " успешно удален");
         return PATH;
     }
 
     private boolean loginIsInvalid(String login) {
-        return teacherService.readByLogin(login).getLogin().equals("null");
+        return studentService.readByLogin(login).getLogin().equals("null");
     }
 }

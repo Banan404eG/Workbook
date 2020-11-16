@@ -1,15 +1,16 @@
-package tk.exdeath.controller.admin;
+package tk.exdeath.controller.admin.delete;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import tk.exdeath.controller.admin.LoggedAdmin;
 
 @Controller
 public class DeletePage {
 
-    final String PATH = "admin/deletePage";
+    final String PATH = "admin/delete/deletePage";
 
     @GetMapping("/deletePage")
     public String returnPage(
