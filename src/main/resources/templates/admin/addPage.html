@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title> Добавление страницы </title>
+    <meta content="text/html; charset=UTF-8" http-equiv="Content-Type">
+    <link rel="stylesheet" th:href="@{webjars/bootstrap/4.2.1/css/bootstrap.min.css}"/>
+    <style>
+        body {
+            padding-top: 5rem;
+            text-align: center;
+        }
+    </style>
+</head>
+<body>
+<h1 th:text="${Message}"></h1>
+
+<form action="/addPage" method="post">
+    <input name="lesson" placeholder="Введите предмет: " style="width:50%; height: 50px; font-size: 30px" type="text">
+    <br><br>
+    <input name="grade" placeholder="Введите класс: " style="width:50%; height: 50px; font-size: 30px" type="text">
+    <br><br>
+    <input name="page" placeholder="Введите страницу: " style="width:50%; height: 50px; font-size: 30px" type="text">
+    <br><br>
+    <input name="numberOfInputs" placeholder="Введите количество ответов: " style="width:50%; height: 50px; font-size: 30px" type="text">
+    <br><br>
+    <input name="pictureURL" placeholder="Введите ссылку на фотографию страницы: " style="width:50%; height: 50px; font-size: 30px" type="text">
+    <br><br>
+    <button style="width:25%; height: 50px; font-size: 30px" type="submit">Подтвердить</button>
+</form>
+</body>
+</html>
