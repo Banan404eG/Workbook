@@ -37,6 +37,7 @@ public class DeleteTeacher {
         }
 
         teacherService.delete(teacherService.readByLogin(login));
+        teacherService.closeSession();
 
         model.addAttribute("Message", login + " успешно удален");
         return PATH;

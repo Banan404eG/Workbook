@@ -35,6 +35,7 @@ public class TasksByStudentID {
         model.addAttribute("tableNames", tableNames(tasks));
         model.addAttribute("IDs", IDs(tasks));
         model.addAttribute("studentID", id);
+        studentService.closeSession();
         return PATH;
     }
 

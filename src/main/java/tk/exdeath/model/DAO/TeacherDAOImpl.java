@@ -51,6 +51,15 @@ public class TeacherDAOImpl implements TeacherDAO {
         return session.createQuery(criteria.select(root).where(builder.like(root.get("login"), login))).uniqueResult();
     }
 
+    @Override
+    public void closeSession() {
+        try {
+            session.close();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
     protected void finalize() {
         try {
             session.close();

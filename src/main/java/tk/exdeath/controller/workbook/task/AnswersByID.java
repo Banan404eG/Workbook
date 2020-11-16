@@ -39,6 +39,8 @@ public class AnswersByID {
 
         setRightAnswers();
         setRole();
+
+        studentService.closeSession();
         return "workbook/" + lesson + "/" + grade + "/" + page;
     }
 

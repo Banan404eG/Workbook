@@ -53,6 +53,7 @@ public class MapStudentAndTeacher {
 
         teacher.addStudent(student);
         teacherService.update(teacher);
+        teacherService.closeSession();
 
         model.addAttribute("Message", studentLogin + " успешно добавлен к " + teacherLogin);
         return PATH;

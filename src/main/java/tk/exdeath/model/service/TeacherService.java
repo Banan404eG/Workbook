@@ -37,4 +37,8 @@ public class TeacherService {
         }
         return teacher;
     }
+
+    public void closeSession() {
+        DAO.closeSession();
+    }
 }

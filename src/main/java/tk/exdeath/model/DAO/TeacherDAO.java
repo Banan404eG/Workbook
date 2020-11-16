@@ -12,4 +12,6 @@ public interface TeacherDAO {
     Teacher readByName(String firstName, String secondName);
 
     Teacher readByLogin(String login);
+
+    void closeSession();
 }

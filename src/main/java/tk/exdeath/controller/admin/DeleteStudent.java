@@ -37,6 +37,7 @@ public class DeleteStudent {
         }
 
         studentService.delete(studentService.readByLogin(login));
+        studentService.closeSession();
 
         model.addAttribute("Message", login + " успешно удален");
         return PATH;

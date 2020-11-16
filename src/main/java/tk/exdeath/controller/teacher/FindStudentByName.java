@@ -38,6 +38,7 @@ public class FindStudentByName {
             return "redirect:/tasksByStudentID?id=" + students.get(0).getStudentID();
         }
 
+        studentService.closeSession();
         return returnStudentList(model, students);
     }
 

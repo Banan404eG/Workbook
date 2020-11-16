@@ -67,7 +67,11 @@ public class StudentDAOImpl implements StudentDAO {
 
     @Override
     public void closeSession() {
-        session.close();
+        try {
+            session.close();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
 
     protected void finalize() {

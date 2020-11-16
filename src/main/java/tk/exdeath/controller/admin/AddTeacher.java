@@ -41,6 +41,7 @@ public class AddTeacher {
         }
 
         teacherService.create(new Teacher(login, password, firstName, secondName));
+        teacherService.closeSession();
 
         model.addAttribute("Message", firstName + " " + secondName + " успешно создан");
         return PATH;
