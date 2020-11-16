@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title> Страница </title>
+    <meta content="text/html; charset=UTF-8" http-equiv="Content-Type">
+    <link rel="stylesheet" th:href="@{webjars/bootstrap/4.2.1/css/bootstrap.min.css}"/>
+    <style>
+        body {
+            padding-top: 5rem;
+            text-align: center;
+        }
+
+        table.workbook {
+            width: 100%;
+            border-spacing: 0;
+        }
+
+        table.workbook td {
+            width: 33%;
+            vertical-align: top;
+        }
+
+        td.left {
+            text-align: right;
+        }
+
+        td.right {
+            text-align: left;
+        }
+
+
+
+
+
+    </style>
+</head>
+<body>
+<table class="workbook">
+    <tr>
+        <td class="left">
+            <img alt="loading..." th:src="${picture}">
+        </td>
+
+        <td class="right">
+
+            <div th:if="${role == 'teacher' or role == 'watcher'}">
+                <pre>
+                    <h1 style="text-align: center"> Ответы ученика </h1><br>
+                    <li style="font-size: 30px" th:each="answer : ${studentAnswers}" th:utext="${answer}"></li>
+                </pre>
+            </div>
+
+            <div th:unless="${role == 'teacher'}">
+                <form action="/answers" method="post">
+                    <div th:utext="${inputs}"></div>
+                    <input type="hidden" name="lesson" th:value="*{lesson}"/>
+                    <input type="hidden" name="grade" th:value="*{grade}"/>
+                    <input type="hidden" name="page" th:value="*{page}"/>
+                    <button type="submit"> Подтвердить</button>
+                </form>
+            </div>
+        </td>
+
+        <td class="right">
+            <div th:if="${role == 'teacher'}">
+                <pre>
+                    <h1 style="text-align: center"> Правильные ответы </h1><br>
+                    <li style="font-size: 30px" th:each="answer : ${rightAnswers}" th:utext="${answer}"></li>
+                </pre>
+            </div>
+        </td>
+    </tr>
+</table>
+</body>
+</html>

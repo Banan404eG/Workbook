@@ -33,6 +33,18 @@ public class Page implements Serializable {
         this.picture = picture;
     }
 
+    public int getNumberOfInputs() {
+        return numberOfInputs;
+    }
+
+    public String getPicture() {
+        return picture;
+    }
+
+    public String getLesson() {
+        return lesson;
+    }
+
     public void setLesson(String lesson) {
         this.lesson = lesson;
     }

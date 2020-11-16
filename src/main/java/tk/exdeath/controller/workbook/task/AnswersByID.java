@@ -5,12 +5,15 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import tk.exdeath.controller.teacher.LoggedTeacher;
+import tk.exdeath.model.Page;
 import tk.exdeath.model.Task;
+import tk.exdeath.model.service.PageService;
 import tk.exdeath.model.service.StudentService;
 
 @Controller
 public class AnswersByID {
 
+    final String PATH = "workbook/page";
     final int RIGHT_ANSWERS_STUDENT_ID = 4;
 
     Model model;
@@ -37,11 +40,21 @@ public class AnswersByID {
         page = task.getPage();
         model.addAttribute("studentAnswers", task.getAnswers());
 
+
+        PageService pageService = new PageService();
+        Page pageEntity = pageService.read(lesson, grade, page);
+        model.addAttribute("picture", pageEntity.getPicture());
+        pageService.closeSession();
+        model.addAttribute("lesson", lesson);
+        model.addAttribute("grade", grade);
+        model.addAttribute("page", page);
+
+
         setRightAnswers();
         setRole();
 
         studentService.closeSession();
-        return "workbook/" + lesson + "/" + grade + "/" + page;
+        return PATH;
     }
 
 
