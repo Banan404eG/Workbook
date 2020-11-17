@@ -1,15 +1,14 @@
-package tk.exdeath.controller.workbook;
+package tk.exdeath.controller.student;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
-import tk.exdeath.controller.student.LoggedStudent;
 import tk.exdeath.model.Student;
 import tk.exdeath.model.Task;
 
 @Controller
-public class AddStudentAnswers {
+public class AddAnswers {
 
     @PostMapping("/answers")
     public String answers(

@@ -1,4 +1,4 @@
-package tk.exdeath.controller.workbook.task;
+package tk.exdeath.controller.workbook;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
