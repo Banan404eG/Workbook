@@ -11,10 +11,10 @@ import java.util.ArrayList;
 import java.util.List;
 
 @Controller
-public class GetWorkbook {
+public class PageList {
 
-    @GetMapping("/workbook")
-    public String getPages(
+    @GetMapping("/pageList")
+    public String getPageList(
             @RequestParam(defaultValue = "-1") int grade,
             @RequestParam(defaultValue = "NULL") String lesson, Model model) {
 

@@ -33,6 +33,10 @@ public class Page implements Serializable {
         this.picture = picture;
     }
 
+    public int getGrade() {
+        return grade;
+    }
+
     public int getPage() {
         return page;
     }

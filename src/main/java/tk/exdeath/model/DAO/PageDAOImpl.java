@@ -35,6 +35,11 @@ public class PageDAOImpl implements PageDAO {
     }
 
     @Override
+    public List<Page> readAllPages() {
+        return session.createQuery(criteria.select(root)).list();
+    }
+
+    @Override
     public List<Page> readPages(String lesson, int grade) {
         Predicate lessonPredicate = builder.like(root.get("lesson"), lesson);
         Predicate gradePredicate = builder.equal(root.get("grade"), grade);

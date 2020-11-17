@@ -4,7 +4,9 @@ import tk.exdeath.model.DAO.PageDAO;
 import tk.exdeath.model.DAO.PageDAOImpl;
 import tk.exdeath.model.Page;
 
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 public class PageService {
 
@@ -17,10 +19,6 @@ public class PageService {
     public Page read(String lesson, int grade, int page) {
         Page pageEntity = DAO.read(lesson, grade, page);
         return nullCheck(pageEntity);
-    }
-
-    public List<Page> readPages(String lesson, int grade) {
-        return DAO.readPages(lesson, grade);
     }
 
     public void update(Page page) {
@@ -37,6 +35,32 @@ public class PageService {
             page.setLesson("null");
         }
         return page;
+    }
+
+    public Set<String> readLessons() {
+        Set<String> lessons = new HashSet<>();
+
+        for (Page page : DAO.readAllPages()) {
+            lessons.add(page.getLesson());
+        }
+
+        return lessons;
+    }
+
+    public Set<Integer> readGrades(String lesson) {
+        Set<Integer> grades = new HashSet<>();
+
+        for (Page page : DAO.readAllPages()) {
+            if (page.getLesson().equals(lesson)) {
+                grades.add(page.getGrade());
+            }
+        }
+
+        return grades;
+    }
+
+    public List<Page> readPages(String lesson, int grade) {
+        return DAO.readPages(lesson, grade);
     }
 
     public void closeSession() {

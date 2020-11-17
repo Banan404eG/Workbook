@@ -1,21 +1,21 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
-    <title> Список тетрадей </title>
+    <title> Список классов </title>
     <meta content="text/html; charset=UTF-8" http-equiv="Content-Type">
     <link rel="stylesheet" th:href="@{webjars/bootstrap/4.2.1/css/bootstrap.min.css}"/>
     <style>
         A {
             text-decoration: none;
         }
+
     </style>
 </head>
 <body>
-
-<h1 style="text-align: center"> Список тетрадей: </h1>
-<h2>Информатика: </h2>
-<a href="workbook?lesson=Informatics&grade=7"> 7 класс </a>
-<br><br><br><br>
-
+<h1>Список классов: </h1>
+<a style="font-size: 30px" th:each="grade : ${grades}"
+   th:href="@{|/pageList?lesson=${lesson}&grade=${grade}|}"
+   th:text="${grade}">
+</a>
 </body>
 </html>

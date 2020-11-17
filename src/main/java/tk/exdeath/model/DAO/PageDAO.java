@@ -13,6 +13,8 @@ public interface PageDAO {
 
     void delete(Page page);
 
+    List<Page> readAllPages();
+
     List<Page> readPages(String lesson, int grade);
 
     void closeSession();
