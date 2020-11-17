@@ -4,6 +4,8 @@ import tk.exdeath.model.DAO.PageDAO;
 import tk.exdeath.model.DAO.PageDAOImpl;
 import tk.exdeath.model.Page;
 
+import java.util.List;
+
 public class PageService {
 
     private final PageDAO DAO = new PageDAOImpl();
@@ -15,6 +17,10 @@ public class PageService {
     public Page read(String lesson, int grade, int page) {
         Page pageEntity = DAO.read(lesson, grade, page);
         return nullCheck(pageEntity);
+    }
+
+    public List<Page> readPages(String lesson, int grade) {
+        return DAO.readPages(lesson, grade);
     }
 
     public void update(Page page) {

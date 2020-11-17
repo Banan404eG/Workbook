@@ -4,6 +4,11 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import tk.exdeath.model.Page;
+import tk.exdeath.model.service.PageService;
+
+import java.util.ArrayList;
+import java.util.List;
 
 @Controller
 public class GetWorkbook {
@@ -18,10 +23,27 @@ public class GetWorkbook {
             return "errorPage";
         }
 
-        return "workbook/" + lesson + "/" + grade + "/pageList";
+        PageService pageService = new PageService();
+        List<Page> pages = pageService.readPages(lesson, grade);
+
+        model.addAttribute("lesson", lesson);
+        model.addAttribute("grade", grade);
+        model.addAttribute("pages", getPages(pages));
+        pageService.closeSession();
+        return "workbook/pageList";
     }
 
     private boolean paramsIsInvalid(int grade, String lesson) {
         return grade == -1 || lesson.equals("NULL");
+    }
+
+    private List<Integer> getPages(List<Page> pageEntities) {
+        List<Integer> pages = new ArrayList<>();
+
+        for (Page page : pageEntities) {
+            pages.add(page.getPage());
+        }
+
+        return pages;
     }
 }

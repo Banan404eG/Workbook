@@ -32,6 +32,7 @@
 
 
 
+
     </style>
 </head>
 <body>
@@ -50,7 +51,7 @@
                 </pre>
             </div>
 
-            <div th:unless="${role == 'teacher'}">
+            <div th:unless="${role == 'teacher' or role == 'watcher'}">
                 <form action="/answers" method="post">
                     <div th:utext="${inputs}"></div>
                     <input type="hidden" name="lesson" th:value="*{lesson}"/>

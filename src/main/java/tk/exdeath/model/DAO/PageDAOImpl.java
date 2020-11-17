@@ -9,6 +9,7 @@ import javax.persistence.criteria.CriteriaBuilder;
 import javax.persistence.criteria.CriteriaQuery;
 import javax.persistence.criteria.Predicate;
 import javax.persistence.criteria.Root;
+import java.util.List;
 
 public class PageDAOImpl implements PageDAO {
 
@@ -31,6 +32,14 @@ public class PageDAOImpl implements PageDAO {
         Predicate pagePredicate = builder.equal(root.get("page"), page);
 
         return session.createQuery(criteria.select(root).where(lessonPredicate, gradePredicate, pagePredicate)).uniqueResult();
+    }
+
+    @Override
+    public List<Page> readPages(String lesson, int grade) {
+        Predicate lessonPredicate = builder.like(root.get("lesson"), lesson);
+        Predicate gradePredicate = builder.equal(root.get("grade"), grade);
+
+        return session.createQuery(criteria.select(root).where(lessonPredicate, gradePredicate)).list();
     }
 
     @Override
