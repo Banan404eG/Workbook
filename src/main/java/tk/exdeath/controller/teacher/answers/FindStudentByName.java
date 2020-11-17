@@ -1,4 +1,4 @@
-package tk.exdeath.controller.teacher;
+package tk.exdeath.controller.teacher.answers;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;

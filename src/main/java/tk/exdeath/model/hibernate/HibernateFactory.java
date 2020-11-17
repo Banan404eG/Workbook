@@ -3,10 +3,7 @@ package tk.exdeath.model.hibernate;
 import org.hibernate.SessionFactory;
 import org.hibernate.boot.registry.StandardServiceRegistryBuilder;
 import org.hibernate.cfg.Configuration;
-import tk.exdeath.model.Page;
-import tk.exdeath.model.Task;
-import tk.exdeath.model.Student;
-import tk.exdeath.model.Teacher;
+import tk.exdeath.model.*;
 
 
 public class HibernateFactory {
@@ -21,8 +18,9 @@ public class HibernateFactory {
             try {
                 Configuration config = new Configuration().configure();
                 config.addAnnotatedClass(Student.class);
-                config.addAnnotatedClass(Teacher.class);
                 config.addAnnotatedClass(Task.class);
+                config.addAnnotatedClass(Teacher.class);
+                config.addAnnotatedClass(Mark.class);
                 config.addAnnotatedClass(Page.class);
                 StandardServiceRegistryBuilder builder = new StandardServiceRegistryBuilder().applySettings(config.getProperties());
                 sessionFactory = config.buildSessionFactory(builder.build());

@@ -1,4 +1,4 @@
-package tk.exdeath.controller.workbook;
+package tk.exdeath.controller.student;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -8,7 +8,7 @@ import tk.exdeath.model.Page;
 import tk.exdeath.model.service.PageService;
 
 @Controller
-public class GetPage {
+public class PageWithInputs {
 
     final String PATH = "workbook/page";
     final String INPUT = "<input name=\"answers[]\" placeholder=\"Ответ: \" type=\"text\"><br><br>";

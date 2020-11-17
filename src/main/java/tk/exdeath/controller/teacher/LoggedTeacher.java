@@ -28,4 +28,8 @@ public abstract class LoggedTeacher {
     public static void setLogin(String login) {
         LoggedTeacher.login = login;
     }
+
+    public static void update() {
+        teacherService.update(teacher);
+    }
 }

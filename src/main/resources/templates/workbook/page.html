@@ -29,10 +29,6 @@
         }
 
 
-
-
-
-
     </style>
 </head>
 <body>
@@ -57,7 +53,7 @@
                     <input type="hidden" name="lesson" th:value="*{lesson}"/>
                     <input type="hidden" name="grade" th:value="*{grade}"/>
                     <input type="hidden" name="page" th:value="*{page}"/>
-                    <button type="submit"> Подтвердить</button>
+                    <button type="submit"> Подтвердить </button>
                 </form>
             </div>
         </td>
@@ -68,6 +64,26 @@
                     <h1 style="text-align: center"> Правильные ответы </h1><br>
                     <li style="font-size: 30px" th:each="answer : ${rightAnswers}" th:utext="${answer}"></li>
                 </pre>
+            </div>
+        </td>
+
+        <td class="right">
+            <div th:if="${role == 'teacher'}">
+                <pre>
+                    <h1 style="text-align: center"> Ваши оценки: </h1><br>
+                    <li style="font-size: 30px" th:each="mark : ${marks}" th:utext="${mark}"></li>
+                </pre>
+            </div>
+        </td>
+
+        <td class="right">
+            <div th:if="${role == 'teacher'}">
+                <h1 style="text-align: center"> Выставить оценки: </h1><br>
+                <form action="/marks" method="post">
+                    <div th:utext="${inputs}"></div>
+                    <input type="hidden" name="id" th:value="*{id}"/>
+                    <button type="submit"> Подтвердить </button>
+                </form>
             </div>
         </td>
     </tr>

@@ -2,6 +2,7 @@ package tk.exdeath.model;
 
 import javax.persistence.*;
 import java.io.Serializable;
+import java.util.List;
 import java.util.Set;
 
 @Entity
@@ -27,6 +28,8 @@ public class Teacher implements Serializable {
             joinColumns = @JoinColumn(name = "teacher_id"),
             inverseJoinColumns = @JoinColumn(name = "student_id"))
     Set<Student> students;
+    @OneToMany(mappedBy = "teacher", cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<Mark> marks;
 
     public Teacher() {
     }
@@ -74,5 +77,13 @@ public class Teacher implements Serializable {
 
     public void addStudent(Student student) {
         students.add(student);
+    }
+
+    public List<Mark> getMarks() {
+        return marks;
+    }
+
+    public void addMark(Mark mark) {
+        marks.add(mark);
     }
 }
