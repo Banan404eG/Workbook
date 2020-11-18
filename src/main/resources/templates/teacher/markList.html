@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title> Список оценок </title>
+    <meta content="text/html; charset=UTF-8" http-equiv="Content-Type">
+    <link rel="stylesheet" th:href="@{webjars/bootstrap/4.2.1/css/bootstrap.min.css}"/>
+    <style>
+        body {
+            padding-top: 5rem;
+            text-align: center;
+        }
+
+        table.workbook {
+            width: 100%;
+            border-spacing: 0;
+        }
+
+        table.workbook td {
+            width: 33%;
+            vertical-align: top;
+        }
+
+        td.left {
+            text-align: right;
+        }
+
+        td.right {
+            text-align: left;
+        }
+
+
+
+
+    </style>
+</head>
+<body>
+<table class="workbook">
+    <tr>
+        <td class="right">
+                <pre>
+                    <h1 style="text-align: center"> Ученики </h1><br>
+                    <li style="font-size: 30px" th:each="student : ${students}" th:utext="${student}"></li>
+                </pre>
+        </td>
+
+        <td class="right">
+                <pre>
+                    <h1 style="text-align: center"> Оценки </h1><br>
+                    <li style="font-size: 30px" th:each="mark : ${marks}" th:utext="${mark}"></li>
+                </pre>
+        </td>
+    </tr>
+</table>
+</body>
+</html>
