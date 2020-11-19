@@ -82,6 +82,7 @@
                 <form action="/marks" method="post">
                     <div th:utext="${inputs}"></div>
                     <input type="hidden" name="id" th:value="*{id}"/>
+                    <input type="hidden" name="studentID" th:value="*{studentID}"/>
                     <button type="submit"> Подтвердить </button>
                 </form>
             </div>

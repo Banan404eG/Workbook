@@ -13,8 +13,10 @@ public class Mark implements Serializable {
     private static final long serialVersionUID = 1;
 
     @Id
-    @Column(name = "task_id")
-    private int taskID;
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "task_id")
+    private Task task;
+
     @Column(columnDefinition = "varchar[]")
     @Type(type = "tk.exdeath.model.hibernate.SqlStringArray")
     private String[] marks;
@@ -27,14 +29,14 @@ public class Mark implements Serializable {
     public Mark() {
     }
 
-    public Mark(int taskID, String[] marks, Teacher teacher) {
-        this.taskID = taskID;
+    public Mark(Task task, String[] marks, Teacher teacher) {
+        this.task = task;
         this.marks = marks;
         this.teacher = teacher;
     }
 
     public int getTaskID() {
-        return taskID;
+        return task.getId();
     }
 
     public String[] getMarks() {
@@ -46,14 +48,14 @@ public class Mark implements Serializable {
     }
 
     public static class PrimaryKey implements Serializable {
-        protected Integer taskID;
+        protected Task task;
         protected Teacher teacher;
 
         public PrimaryKey() {
         }
 
-        public PrimaryKey(Integer taskID, Teacher teacher) {
-            this.taskID = taskID;
+        public PrimaryKey(Task task, Teacher teacher) {
+            this.task = task;
             this.teacher = teacher;
         }
     }

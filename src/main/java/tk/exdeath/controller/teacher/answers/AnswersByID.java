@@ -41,6 +41,7 @@ public class AnswersByID {
         grade = task.getGrade();
         page = task.getPage();
         model.addAttribute("studentAnswers", task.getAnswers());
+        model.addAttribute("studentID", task.getStudentID());
 
 
         PageService pageService = new PageService();

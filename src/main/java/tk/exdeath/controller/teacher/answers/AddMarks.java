@@ -6,6 +6,8 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import tk.exdeath.controller.teacher.LoggedTeacher;
 import tk.exdeath.model.Mark;
+import tk.exdeath.model.Student;
+import tk.exdeath.model.Task;
 import tk.exdeath.model.Teacher;
 
 @Controller
@@ -17,12 +19,13 @@ public class AddMarks {
     @PostMapping("/marks")
     public String marks(
             @RequestParam(required = false, value = "marks[]") String[] marks,
-            @RequestParam() int id, Model model) {
+            @RequestParam() int id,
+            @RequestParam() int studentID, Model model) {
 
         Teacher teacher = LoggedTeacher.getTeacher();
 
         if (markIsNull(teacher, id)) {
-            Mark mark = new Mark(id, marks, teacher);
+            Mark mark = new Mark(getTask(studentID, id), marks, teacher);
             teacher.addMark(mark);
         } else {
             updateMarks(marks);
@@ -31,6 +34,19 @@ public class AddMarks {
         LoggedTeacher.update();
         model.addAttribute("Error", marks);
         return "errorPage";
+    }
+
+    private Task getTask(int studentID, int id) {
+        for (Student student : LoggedTeacher.getTeacher().getStudents()) {
+            if (student.getStudentID() == studentID) {
+                for (Task task : student.getTasks()) {
+                    if (task.getId() == id) {
+                        return task;
+                    }
+                }
+            }
+        }
+        return null;
     }
 
     private boolean markIsNull(Teacher teacher, int id) {
