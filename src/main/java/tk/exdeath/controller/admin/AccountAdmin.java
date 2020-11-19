@@ -10,13 +10,11 @@ public class AccountAdmin {
     final String PATH = "admin/accountAdmin";
 
     @GetMapping("/accountAdmin")
-    public String account(Model model) {
-
+    public String returnPage(Model model) {
         if (LoggedAdmin.isLogged()) {
             model.addAttribute("key", LoggedAdmin.KEY);
             return PATH;
         }
-
         return "errorPage";
     }
 }

@@ -12,13 +12,11 @@ public abstract class LoggedAdmin {
         return key.equals(LoggedAdmin.KEY);
     }
 
-    public static boolean isLoginAndPasswordValid(String login, String password) {
-
+    public static boolean areLoginAndPasswordValid(String login, String password) {
         if (login.equals(LOGIN) && password.equals(PASSWORD)) {
             isLogged = true;
             return true;
         }
-
         return false;
     }
 

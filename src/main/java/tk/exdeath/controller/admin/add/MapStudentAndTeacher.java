@@ -18,24 +18,27 @@ public class MapStudentAndTeacher {
 
     @GetMapping("/mapStudentAndTeacher")
     public String returnPage(
-            @RequestParam(defaultValue = "ERROR") String key, Model model) {
+            @RequestParam(defaultValue = "ERROR") String key) {
 
         if (LoggedAdmin.isKeyValid(key)) {
             return PATH;
         }
-
         return "errorPage";
     }
 
     @PostMapping("/mapStudentAndTeacher")
     public String mapStudentAndTeacher(
-            @RequestParam String studentLogin,
-            @RequestParam String teacherLogin, Model model) {
+            @RequestParam(defaultValue = "null") String studentLogin,
+            @RequestParam(defaultValue = "null") String teacherLogin, Model model) {
+
+        if (incorrectInput(studentLogin, teacherLogin)) {
+            model.addAttribute("Message", "Некорректный ввод");
+            return PATH;
+        }
 
         StudentService studentService = new StudentService();
         Student student = studentService.readByLogin(studentLogin);
-
-        if (loginIsInvalid(student)) {
+        if (loginIsInvalid(student.getLogin())) {
             model.addAttribute("Message", "Ученика с таким логином не существует");
             return PATH;
         }
@@ -43,8 +46,7 @@ public class MapStudentAndTeacher {
 
         TeacherService teacherService = new TeacherService();
         Teacher teacher = teacherService.readByLogin(teacherLogin);
-
-        if (loginIsInvalid(teacher)) {
+        if (loginIsInvalid(teacher.getLogin())) {
             model.addAttribute("Message", "Учителя с таким логином не существует");
             return PATH;
         }
@@ -52,16 +54,16 @@ public class MapStudentAndTeacher {
         teacher.addStudent(student);
         teacherService.update(teacher);
         teacherService.closeSession();
-
         model.addAttribute("Message", studentLogin + " успешно добавлен к " + teacherLogin);
         return PATH;
     }
 
-    private boolean loginIsInvalid(Teacher teacher) {
-        return teacher.getLogin().equals("null");
+
+    private boolean incorrectInput(String studentLogin, String teacherLogin) {
+        return studentLogin.equals("null") || teacherLogin.equals("null");
     }
 
-    private boolean loginIsInvalid(Student student) {
-        return student.getLogin().equals("null");
+    private boolean loginIsInvalid(String login) {
+        return login.equals("null");
     }
 }

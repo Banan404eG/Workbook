@@ -14,41 +14,46 @@ public class AddTeacher {
 
     final String PATH = "admin/add/addTeacher";
 
-    TeacherService teacherService;
-
     @GetMapping("/addTeacher")
     public String returnPage(
-            @RequestParam(defaultValue = "ERROR") String key, Model model) {
+            @RequestParam(defaultValue = "ERROR") String key) {
 
         if (LoggedAdmin.isKeyValid(key)) {
             return PATH;
         }
-
         return "errorPage";
     }
 
     @PostMapping("/addTeacher")
     public String addTeacher(
-            @RequestParam String login,
-            @RequestParam String password,
-            @RequestParam String firstName,
-            @RequestParam String secondName, Model model) {
+            @RequestParam(defaultValue = "null") String login,
+            @RequestParam(defaultValue = "null") String password,
+            @RequestParam(defaultValue = "null") String firstName,
+            @RequestParam(defaultValue = "null") String secondName, Model model) {
 
-        teacherService = new TeacherService();
+        if (incorrectInput(login, password, firstName, secondName)) {
+            model.addAttribute("Message", "Некорректный ввод");
+            return PATH;
+        }
 
-        if (loginIsInvalid(login)) {
+        TeacherService teacherService = new TeacherService();
+        if (loginIsInvalid(login, teacherService)) {
             model.addAttribute("Message", "Учитель с таким логином уже существует");
             return PATH;
         }
 
         teacherService.create(new Teacher(login, password, firstName, secondName));
         teacherService.closeSession();
-
         model.addAttribute("Message", firstName + " " + secondName + " успешно создан");
         return PATH;
     }
 
-    private boolean loginIsInvalid(String login) {
+
+    private boolean incorrectInput(String login, String password, String firstName, String secondName) {
+        return login.equals("null") || password.equals("null") || firstName.equals("null") || secondName.equals("null");
+    }
+
+    private boolean loginIsInvalid(String login, TeacherService teacherService) {
         return !teacherService.readByLogin(login).getLogin().equals("null");
     }
 }

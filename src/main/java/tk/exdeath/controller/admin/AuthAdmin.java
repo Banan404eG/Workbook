@@ -12,25 +12,23 @@ public class AuthAdmin {
     final String PATH = "admin/authAdmin";
 
     @GetMapping("/authAdmin")
-    public String auth(
+    public String returnPage(
             @RequestParam(defaultValue = "ERROR") String key) {
 
         if (LoggedAdmin.isKeyValid(key)) {
             return PATH;
         }
-
         return "errorPage";
     }
 
     @PostMapping("/authAdmin")
-    public String passCheck(
+    public String authAdmin(
             @RequestParam String login,
             @RequestParam String password, Model model) {
 
-        if (LoggedAdmin.isLoginAndPasswordValid(login, password)) {
+        if (LoggedAdmin.areLoginAndPasswordValid(login, password)) {
             return "redirect:/accountAdmin";
         }
-
         model.addAttribute("Error", "Неверные логин или пароль");
         return PATH;
     }

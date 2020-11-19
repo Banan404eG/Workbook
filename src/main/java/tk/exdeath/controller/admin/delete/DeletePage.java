@@ -16,44 +16,45 @@ public class DeletePage {
 
     @GetMapping("/deletePage")
     public String returnPage(
-            @RequestParam(defaultValue = "ERROR") String key, Model model) {
+            @RequestParam(defaultValue = "ERROR") String key) {
 
         if (LoggedAdmin.isKeyValid(key)) {
             return PATH;
         }
-
         return "errorPage";
     }
 
     @PostMapping("/deletePage")
     public String deletePage(
             @RequestParam(defaultValue = "null") String lesson,
-            @RequestParam int grade,
-            @RequestParam int page, Model model) {
+            @RequestParam(defaultValue = "0") int grade,
+            @RequestParam(defaultValue = "0") int page, Model model) {
 
         if (incorrectInput(lesson, grade, page)) {
             model.addAttribute("Message", "Некорректный ввод");
             return PATH;
         }
 
-        if (pageDoesNotExist(lesson, grade, page)) {
+        PageService pageService = new PageService();
+        Page pageEntity = pageService.read(lesson, grade, page);
+
+        if (pageDoesNotExist(pageEntity)) {
             model.addAttribute("Message", "Страницы с такими данными не найдено: " + lesson + " " + grade + " " + page);
             return PATH;
         }
 
-        PageService pageService = new PageService();
-        pageService.delete(pageService.read(lesson, grade, page));
+        pageService.delete(pageEntity);
         pageService.closeSession();
-
         model.addAttribute("Message", lesson + " " + grade + " " + page + " успешно удален");
         return PATH;
     }
+
 
     private boolean incorrectInput(String lesson, int grade, int page) {
         return lesson.equals("null") || grade < 1 || page < 1;
     }
 
-    private boolean pageDoesNotExist(String lesson, int grade, int page) {
-        return lesson.equals("null") || grade == 0 || page == 0;
+    private boolean pageDoesNotExist(Page page) {
+        return page.getLesson().equals("null");
     }
 }

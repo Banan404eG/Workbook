@@ -6,6 +6,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import tk.exdeath.controller.admin.LoggedAdmin;
+import tk.exdeath.model.Teacher;
 import tk.exdeath.model.service.TeacherService;
 
 @Controller
@@ -13,38 +14,45 @@ public class DeleteTeacher {
 
     final String PATH = "admin/delete/deleteTeacher";
 
-    TeacherService teacherService;
-
     @GetMapping("/deleteTeacher")
     public String returnPage(
-            @RequestParam(defaultValue = "ERROR") String key, Model model) {
+            @RequestParam(defaultValue = "ERROR") String key) {
 
         if (LoggedAdmin.isKeyValid(key)) {
             return PATH;
         }
-
         return "errorPage";
     }
 
     @PostMapping("/deleteTeacher")
     public String deleteTeacher(
-            @RequestParam String login, Model model) {
+            @RequestParam(defaultValue = "null") String login, Model model) {
 
-        teacherService = new TeacherService();
+        if (incorrectInput(login)) {
+            model.addAttribute("Message", "Некорректный ввод");
+            return PATH;
+        }
 
-        if (loginIsInvalid(login)) {
+        TeacherService teacherService = new TeacherService();
+        Teacher teacher = teacherService.readByLogin(login);
+
+        if (loginIsInvalid(teacher)) {
             model.addAttribute("Message", "Учителя с таким логином не существует");
             return PATH;
         }
 
-        teacherService.delete(teacherService.readByLogin(login));
+        teacherService.delete(teacher);
         teacherService.closeSession();
-
         model.addAttribute("Message", login + " успешно удален");
         return PATH;
     }
 
-    private boolean loginIsInvalid(String login) {
-        return teacherService.readByLogin(login).getLogin().equals("null");
+
+    private boolean incorrectInput(String login) {
+        return login.equals("null");
+    }
+
+    private boolean loginIsInvalid(Teacher teacher) {
+        return teacher.getLogin().equals("null");
     }
 }

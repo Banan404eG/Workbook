@@ -16,21 +16,20 @@ public class AddPage {
 
     @GetMapping("/addPage")
     public String returnPage(
-            @RequestParam(defaultValue = "ERROR") String key, Model model) {
+            @RequestParam(defaultValue = "ERROR") String key) {
 
         if (LoggedAdmin.isKeyValid(key)) {
             return PATH;
         }
-
         return "errorPage";
     }
 
     @PostMapping("/addPage")
     public String addPage(
             @RequestParam(defaultValue = "null") String lesson,
-            @RequestParam int grade,
-            @RequestParam int page,
-            @RequestParam int numberOfInputs,
+            @RequestParam(defaultValue = "0") int grade,
+            @RequestParam(defaultValue = "0") int page,
+            @RequestParam(defaultValue = "0") int numberOfInputs,
             @RequestParam(defaultValue = "null") String pictureURL, Model model) {
 
         if (incorrectInput(lesson, grade, page, numberOfInputs, pictureURL)) {
@@ -38,24 +37,24 @@ public class AddPage {
             return PATH;
         }
 
-        if (pageExist(lesson, grade, page)) {
+        PageService pageService = new PageService();
+        if (pageExist(lesson, grade, page, pageService)) {
             model.addAttribute("Message", "Страница с такими данными уже существует: " + lesson + " " + grade + " " + page);
             return PATH;
         }
 
-        PageService pageService = new PageService();
         pageService.create(new Page(lesson, grade, page, numberOfInputs, pictureURL));
         pageService.closeSession();
-
         model.addAttribute("Message", lesson + " " + grade + " " + page + " успешно создан");
         return PATH;
     }
+
 
     private boolean incorrectInput(String lesson, int grade, int page, int numberOfInputs, String pictureURL) {
         return lesson.equals("null") || grade < 1 || page < 1 || numberOfInputs < 1 || pictureURL.equals("null");
     }
 
-    private boolean pageExist(String lesson, int grade, int page) {
-        return false;
+    private boolean pageExist(String lesson, int grade, int page, PageService pageService) {
+        return !pageService.read(lesson, grade, page).getLesson().equals("null");
     }
 }
