@@ -6,7 +6,6 @@ import org.springframework.web.bind.annotation.GetMapping;
 import tk.exdeath.controller.teacher.LoggedTeacher;
 import tk.exdeath.model.Mark;
 import tk.exdeath.model.Student;
-import tk.exdeath.model.Task;
 import tk.exdeath.model.Teacher;
 
 import java.util.ArrayList;
@@ -45,25 +44,15 @@ public class MarkList {
         List<String> marks = new ArrayList<>();
 
         for (Student student : students) {
-            List<Integer> IDs = new ArrayList<>();
             StringBuilder studentMarks = new StringBuilder();
 
-            for (Task task : student.getTasks()) {
-                IDs.add(task.getId());
-            }
-
-
             for (Mark mark : teacherMarks) {
-                int taskID = mark.getTaskID();
-                for (int id : IDs) {
-                    if (taskID == id) {
-                        for (String string : mark.getMarks()) {
-                            studentMarks.append(string);
-                            if (!string.equals("")) {
-                                studentMarks.append(" ");
-                            }
+                if (mark.getTask().getStudentID() == student.getStudentID()) {
+                    for (String string : mark.getMarks()) {
+                        studentMarks.append(string);
+                        if (!string.equals("")) {
+                            studentMarks.append(" ");
                         }
-                        break;
                     }
                 }
             }

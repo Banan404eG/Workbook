@@ -39,6 +39,10 @@ public class Mark implements Serializable {
         return task.getId();
     }
 
+    public Task getTask() {
+        return task;
+    }
+
     public String[] getMarks() {
         return marks;
     }
