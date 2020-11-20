@@ -13,10 +13,6 @@ public class AuthTeacher {
 
     final String PATH = "teacher/authTeacher";
 
-    Teacher teacher;
-    String login;
-    Model model;
-
     @GetMapping("/authTeacher")
     public String auth() {
         return PATH;
@@ -27,44 +23,32 @@ public class AuthTeacher {
             @RequestParam String login,
             @RequestParam String password, Model model) {
 
-        this.login = login;
-        this.model = model;
         TeacherService service = LoggedTeacher.getTeacherService();
-        teacher = service.readByLogin(login);
+        Teacher teacher = service.readByLogin(login);
 
-        if (teacherDoesNotExist()) {
-            return invalidLogin();
+        if (teacherDoesNotExist(teacher)) {
+            model.addAttribute("Error", "Аккаунта с таким логином не существует");
+            return PATH;
         }
-
-        if (passwordIsNotCorrect(password)) {
-            return invalidPassword();
+        if (passwordIsNotCorrect(teacher, password)) {
+            model.addAttribute("Error", "Неверный пароль, попробуйте ещё раз");
+            return PATH;
         }
-
-        return signIn();
+        return signIn(teacher, login);
     }
 
 
-    private boolean teacherDoesNotExist() {
+    private boolean teacherDoesNotExist(Teacher teacher) {
         return teacher.getLogin().equals("null");
     }
 
-    private String invalidLogin() {
-        model.addAttribute("Error", "Аккаунта с таким логином не существует");
-        return PATH;
-    }
-
-    private boolean passwordIsNotCorrect(String password) {
+    private boolean passwordIsNotCorrect(Teacher teacher, String password) {
         return !teacher.getPassword().equals(password);
     }
 
-    private String invalidPassword() {
-        model.addAttribute("Error", "Неверный пароль, попробуйте ещё раз");
-        return PATH;
-    }
-
-    private String signIn() {
-        LoggedTeacher.setLogin(login);
+    private String signIn(Teacher teacher, String login) {
         LoggedTeacher.setTeacher(teacher);
+        LoggedTeacher.setLogin(login);
         return "redirect:/accountTeacher";
     }
 }

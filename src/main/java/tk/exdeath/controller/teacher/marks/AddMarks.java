@@ -1,7 +1,6 @@
 package tk.exdeath.controller.teacher.marks;
 
 import org.springframework.stereotype.Controller;
-import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import tk.exdeath.controller.teacher.LoggedTeacher;
@@ -12,8 +11,6 @@ import tk.exdeath.model.Teacher;
 
 @Controller
 public class AddMarks {
-
-    final String PATH = "";
 
     private String[] currentMarks;
     private Mark markToUpdate;

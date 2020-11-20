@@ -16,14 +16,12 @@ public class StudentList {
     public String studentList(Model model) {
         List<String> studentNames = new ArrayList<>();
         List<String> studentIDs = new ArrayList<>();
-        String firstName;
-        String secondName;
+
         for (Student student : LoggedTeacher.getTeacher().getStudents()) {
-            firstName = student.getFirstName();
-            secondName = student.getSecondName();
-            studentNames.add(firstName + " " + secondName);
+            studentNames.add(student.getFirstName() + " " + student.getSecondName());
             studentIDs.add(String.valueOf(student.getStudentID()));
         }
+
         model.addAttribute("students", studentNames);
         model.addAttribute("IDs", studentIDs);
         return "teacher/studentList";

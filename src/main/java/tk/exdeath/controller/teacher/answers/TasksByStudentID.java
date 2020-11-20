@@ -16,47 +16,48 @@ public class TasksByStudentID {
 
     final String PATH = "workbook/tasksByStudentID";
 
-
     @GetMapping("/tasksByStudentID")
     public String tasksByID(
-            @RequestParam int id, Model model) {
+            @RequestParam(defaultValue = "0") int id, Model model) {
+
+        if (incorrectInput(id)) {
+            model.addAttribute("Error", "Некорректный ввод");
+            return PATH;
+        }
 
         StudentService studentService = new StudentService();
         Student student = studentService.readByID(id);
-
         if (studentDoesNotExist(student)) {
             model.addAttribute("Error", "Ученика с такими ID не существует");
             return PATH;
         }
 
-        List<Task> tasks = student.getTasks();
-
-        model.addAttribute("Name", student.getFirstName() + " " + student.getSecondName());
-        model.addAttribute("tableNames", tableNames(tasks));
-        model.addAttribute("IDs", IDs(tasks));
-        model.addAttribute("studentID", id);
+        setModelAttributes(student, model);
         studentService.closeSession();
         return PATH;
     }
 
 
+    private boolean incorrectInput(int id) {
+        return id < 1;
+    }
+
     private boolean studentDoesNotExist(Student student) {
         return student.getLogin().equals("null");
     }
 
-    private List<Integer> IDs(List<Task> tasks) {
-        List<Integer> IDs = new ArrayList<>();
-        for (Task task : tasks) {
-            IDs.add(task.getId());
-        }
-        return IDs;
-    }
-
-    private List<String> tableNames(List<Task> tasks) {
+    private void setModelAttributes(Student student, Model model) {
         List<String> tableNames = new ArrayList<>();
-        for (Task task : tasks) {
+        List<Integer> taskIDs = new ArrayList<>();
+
+        for (Task task : student.getTasks()) {
             tableNames.add(task.getTableName());
+            taskIDs.add(task.getId());
         }
-        return tableNames;
+
+        model.addAttribute("Name", student.getFirstName() + " " + student.getSecondName());
+        model.addAttribute("studentID", student.getStudentID());
+        model.addAttribute("tableNames", tableNames);
+        model.addAttribute("IDs", taskIDs);
     }
 }

@@ -24,9 +24,13 @@ public class AnswersByID {
     int grade, page;
 
     @GetMapping("/answersByID")
-    public String taskByID(@RequestParam int studentID,
-                           @RequestParam int id, Model model) {
+    public String taskByID(@RequestParam(defaultValue = "0") int studentID,
+                           @RequestParam(defaultValue = "0") int id, Model model) {
 
+        if (incorrectInput(studentID, id)) {
+            model.addAttribute("Error", "Некорректный ID ученика или ID задания");
+            return "errorPage";
+        }
 
         studentService = new StudentService();
         this.model = model;
@@ -37,42 +41,17 @@ public class AnswersByID {
             return "errorPage";
         }
 
-        lesson = task.getLesson();
-        grade = task.getGrade();
-        page = task.getPage();
-        model.addAttribute("studentAnswers", task.getAnswers());
-        model.addAttribute("studentID", task.getStudentID());
-
-
-        PageService pageService = new PageService();
-        Page pageEntity = pageService.read(lesson, grade, page);
-        model.addAttribute("picture", pageEntity.getPicture());
-        model.addAttribute("inputs", getInputs(pageEntity.getNumberOfInputs()));
-        pageService.closeSession();
-        model.addAttribute("id", id);
-
-        setRightAnswers();
+        setModelAttributes(task, id);
         studentService.closeSession();
-
-        setRole();
-        setMarks(id);
-
         return PATH;
     }
 
 
-    private String getInputs(int numberOfInputs) {
-        StringBuilder inputs = new StringBuilder();
-
-        for (int i = 0; i < numberOfInputs; i++) {
-            inputs.append(INPUT);
-        }
-
-        return inputs.toString();
+    private boolean incorrectInput(int studentID, int id) {
+        return studentID < 1 || id < 1;
     }
 
     private Task getTask(int studentID, int id) {
-
         for (Task task : studentService.readByID(studentID).getTasks()) {
             if (task.getId() == id) {
                 return task;
@@ -81,8 +60,38 @@ public class AnswersByID {
         return null;
     }
 
-    private void setRightAnswers() {
+    private void setModelAttributes(Task task, int id) {
+        setTaskInfo(task);
+        setInputsAndPicture(lesson, grade, page);
+        setRightAnswers();
+        setMarks(id);
+        setRole();
+        model.addAttribute("id", id);
+    }
 
+    private void setTaskInfo(Task task) {
+        lesson = task.getLesson();
+        grade = task.getGrade();
+        page = task.getPage();
+        model.addAttribute("studentAnswers", task.getAnswers());
+        model.addAttribute("studentID", task.getStudentID());
+    }
+
+    private void setInputsAndPicture(String lesson, int grade, int page) {
+        PageService pageService = new PageService();
+        Page pageEntity = pageService.read(lesson, grade, page);
+
+        StringBuilder inputs = new StringBuilder();
+        for (int i = 0; i < pageEntity.getNumberOfInputs(); i++) {
+            inputs.append(INPUT);
+        }
+
+        model.addAttribute("picture", pageEntity.getPicture());
+        model.addAttribute("inputs", inputs.toString());
+        pageService.closeSession();
+    }
+
+    private void setRightAnswers() {
         for (Task task : studentService.readByID(RIGHT_ANSWERS_STUDENT_ID).getTasks()) {
             if (task.getLesson().equals(lesson) && task.getGrade() == grade && task.getPage() == page) {
                 model.addAttribute("rightAnswers", task.getAnswers());
@@ -90,14 +99,6 @@ public class AnswersByID {
             }
         }
         model.addAttribute("rightAnswers", "Правильные ответы не обнаружены");
-    }
-
-    private void setRole() {
-        if (LoggedTeacher.getTeacher() != null) {
-            model.addAttribute("role", "teacher");
-        } else {
-            model.addAttribute("role", "watcher");
-        }
     }
 
     private void setMarks(int id) {
@@ -110,6 +111,14 @@ public class AnswersByID {
                 model.addAttribute("marks", mark.getMarks());
                 return;
             }
+        }
+    }
+
+    private void setRole() {
+        if (LoggedTeacher.getTeacher() != null) {
+            model.addAttribute("role", "teacher");
+        } else {
+            model.addAttribute("role", "watcher");
         }
     }
 }
