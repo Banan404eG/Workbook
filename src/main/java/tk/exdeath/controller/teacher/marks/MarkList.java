@@ -1,4 +1,4 @@
-package tk.exdeath.controller.teacher.answers;
+package tk.exdeath.controller.teacher.marks;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -14,33 +14,35 @@ import java.util.List;
 @Controller
 public class MarkList {
 
-    private List<Student> students;
+    final String PATH = "teacher/markList";
 
     @GetMapping("/markList")
     public String markList(Model model) {
 
         Teacher teacher = LoggedTeacher.getTeacher();
+        List<Student> students = new ArrayList<>();
 
-        model.addAttribute("students", getStudentNames(teacher));
-        model.addAttribute("marks", getMarks(students, teacher.getMarks()));
-        return "teacher/markList";
+        setStudents(teacher, students, model);
+        setMarks(students, teacher.getMarks(), model);
+        return PATH;
     }
 
 
-    private List<String> getStudentNames(Teacher teacher) {
+    private void setStudents(Teacher teacher, List<Student> students, Model model) {
         List<String> studentNames = new ArrayList<>();
-        students = new ArrayList<>();
+        List<Integer> studentIDs = new ArrayList<>();
 
         for (Student student : teacher.getStudents()) {
             studentNames.add(student.getFirstName() + " " + student.getSecondName());
             students.add(student);
+            studentIDs.add(student.getStudentID());
         }
 
-        return studentNames;
+        model.addAttribute("studentIDs", studentIDs);
+        model.addAttribute("students", studentNames);
     }
 
-    private List<String> getMarks(List<Student> students, List<Mark> teacherMarks) {
-
+    private void setMarks(List<Student> students, List<Mark> teacherMarks, Model model) {
         List<String> marks = new ArrayList<>();
 
         for (Student student : students) {
@@ -56,10 +58,8 @@ public class MarkList {
                     }
                 }
             }
-
             marks.add(studentMarks.toString());
         }
-
-        return marks;
+        model.addAttribute("marks", marks);
     }
 }

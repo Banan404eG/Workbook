@@ -20,31 +20,39 @@
             vertical-align: top;
         }
 
-        td.left {
-            text-align: right;
-        }
-
         td.right {
             text-align: left;
         }
-
+        A {
+            text-decoration: none;
+        }
     </style>
 </head>
 <body>
 <table class="workbook">
     <tr>
         <td class="right">
-                <pre>
-                    <h1 style="text-align: center"> Ученики </h1><br>
-                    <li style="font-size: 30px" th:each="student : ${students}" th:utext="${student}"></li>
-                </pre>
+            <pre>
+                <h1 style="text-align: center"> Ученики </h1><br>
+                <li style="font-size: 30px" th:each="student : ${students}" th:utext="${student}"></li>
+            </pre>
         </td>
 
         <td class="right">
-                <pre>
-                    <h1 style="text-align: center"> Оценки </h1><br>
-                    <li style="font-size: 30px" th:each="mark : ${marks}" th:utext="${mark}"></li>
-                </pre>
+            <pre>
+                <h1 style="text-align: center"> Ссылки </h1><br>
+                <a style="font-size: 30px" th:each="studentID : ${studentIDs}"
+                   th:href="@{|/marksByStudentID?studentID=${studentID}|}"
+                   th:utext="'ссылка на задание &lt;br /&gt;'">
+                </a>
+            </pre>
+        </td>
+
+        <td class="right">
+            <pre>
+                <h1 style="text-align: center"> Оценки </h1><br>
+                <li style="font-size: 30px" th:each="mark : ${marks}" th:utext="${mark}"></li>
+            </pre>
         </td>
     </tr>
 </table>

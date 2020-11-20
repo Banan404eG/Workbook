@@ -1,4 +1,4 @@
-package tk.exdeath.controller.teacher.answers;
+package tk.exdeath.controller.teacher.marks;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -13,14 +13,16 @@ import tk.exdeath.model.Teacher;
 @Controller
 public class AddMarks {
 
+    final String PATH = "";
+
     private String[] currentMarks;
     private Mark markToUpdate;
 
     @PostMapping("/marks")
     public String marks(
             @RequestParam(required = false, value = "marks[]") String[] marks,
-            @RequestParam() int id,
-            @RequestParam() int studentID, Model model) {
+            @RequestParam int id,
+            @RequestParam int studentID) {
 
         Teacher teacher = LoggedTeacher.getTeacher();
 
@@ -32,8 +34,19 @@ public class AddMarks {
         }
 
         LoggedTeacher.update();
-        model.addAttribute("Error", marks);
-        return "errorPage";
+        return "redirect:/answersByID?studentID=" + studentID + "&id=" + id;
+    }
+
+
+    private boolean markIsNull(Teacher teacher, int id) {
+        for (Mark mark : teacher.getMarks()) {
+            if (mark.getTaskID() == id) {
+                currentMarks = mark.getMarks();
+                markToUpdate = mark;
+                return false;
+            }
+        }
+        return true;
     }
 
     private Task getTask(int studentID, int id) {
@@ -47,17 +60,6 @@ public class AddMarks {
             }
         }
         return null;
-    }
-
-    private boolean markIsNull(Teacher teacher, int id) {
-        for (Mark mark : teacher.getMarks()) {
-            if (mark.getTaskID() == id) {
-                currentMarks = mark.getMarks();
-                markToUpdate = mark;
-                return false;
-            }
-        }
-        return true;
     }
 
     private void updateMarks(String[] newMarks) {
