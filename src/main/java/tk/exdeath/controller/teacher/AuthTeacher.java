@@ -14,7 +14,7 @@ public class AuthTeacher {
     final String PATH = "teacher/authTeacher";
 
     @GetMapping("/authTeacher")
-    public String auth() {
+    public String returnPage() {
         return PATH;
     }
 

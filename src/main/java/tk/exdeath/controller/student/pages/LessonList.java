@@ -1,23 +1,20 @@
-package tk.exdeath.controller.workbook;
+package tk.exdeath.controller.student.pages;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import tk.exdeath.model.service.PageService;
 
-import java.util.Set;
-
 @Controller
 public class LessonList {
 
+    final String PATH = "workbook/lessonList";
+
     @GetMapping("/lessonList")
-    public String getLibrary(Model model) {
-
+    public String getLessons(Model model) {
         PageService pageService = new PageService();
-        Set<String> lessons = pageService.readLessons();
-
-        model.addAttribute("lessons", lessons);
+        model.addAttribute("lessons", pageService.readLessons());
         pageService.closeSession();
-        return "workbook/lessonList";
+        return PATH;
     }
 }

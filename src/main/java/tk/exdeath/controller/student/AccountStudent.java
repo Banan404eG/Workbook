@@ -10,7 +10,7 @@ public class AccountStudent {
     final String PATH = "student/accountStudent";
 
     @GetMapping("/accountStudent")
-    public String accountTeacher(Model model) {
+    public String returnPage(Model model) {
         model.addAttribute("Name", LoggedStudent.getStudent().getFirstName());
         return PATH;
     }

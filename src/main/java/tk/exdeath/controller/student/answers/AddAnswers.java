@@ -1,9 +1,9 @@
-package tk.exdeath.controller.student;
+package tk.exdeath.controller.student.answers;
 
 import org.springframework.stereotype.Controller;
-import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import tk.exdeath.controller.student.LoggedStudent;
 import tk.exdeath.model.Student;
 import tk.exdeath.model.Task;
 
@@ -13,16 +13,13 @@ public class AddAnswers {
     @PostMapping("/answers")
     public String answers(
             @RequestParam(required = false, value = "answers[]") String[] answers,
-            @RequestParam() String lesson,
-            @RequestParam() int grade,
-            @RequestParam() int page, Model model) {
+            @RequestParam String lesson,
+            @RequestParam int grade,
+            @RequestParam int page) {
 
         Student student = LoggedStudent.getStudent();
-        Task task = new Task(student, lesson, grade, page, answers);
-        student.addTask(task);
+        student.addTask(new Task(student, lesson, grade, page, answers));
         LoggedStudent.update();
-
-        model.addAttribute("Error", answers);
-        return "errorPage";
+        return "redirect:/page?lesson=" + lesson + "&grade=" + grade + "&page=" + page;
     }
 }

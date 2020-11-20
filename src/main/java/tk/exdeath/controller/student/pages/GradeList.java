@@ -1,4 +1,4 @@
-package tk.exdeath.controller.workbook;
+package tk.exdeath.controller.student.pages;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -11,9 +11,11 @@ import java.util.Set;
 @Controller
 public class GradeList {
 
+    final String PATH = "workbook/gradeList";
+
     @GetMapping("/gradeList")
-    public String getLibrary(
-            @RequestParam(defaultValue = "NULL") String lesson, Model model) {
+    public String getGrades(
+            @RequestParam(defaultValue = "null") String lesson, Model model) {
 
         if (lessonIsInvalid(lesson)) {
             model.addAttribute("Error", "Параметры тетради неверны (предмет)");
@@ -21,15 +23,14 @@ public class GradeList {
         }
 
         PageService pageService = new PageService();
-        Set<Integer> grades = pageService.readGrades(lesson);
-
-        model.addAttribute("grades", grades);
-        pageService.closeSession();
+        model.addAttribute("grades", pageService.readGrades(lesson));
         model.addAttribute("lesson", lesson);
-        return "workbook/gradeList";
+        pageService.closeSession();
+        return PATH;
     }
 
+
     private boolean lessonIsInvalid(String lesson) {
-        return lesson.equals("NULL");
+        return lesson.equals("null");
     }
 }

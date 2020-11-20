@@ -13,12 +13,8 @@ public class AuthStudent {
 
     final String PATH = "student/authStudent";
 
-    Student student;
-    String login;
-    Model model;
-
     @GetMapping("/authStudent")
-    public String auth() {
+    public String returnPage() {
         return PATH;
     }
 
@@ -27,42 +23,30 @@ public class AuthStudent {
             @RequestParam String login,
             @RequestParam String password, Model model) {
 
-        this.login = login;
-        this.model = model;
         StudentService service = LoggedStudent.getStudentService();
-        student = service.readByLogin(login);
+        Student student = service.readByLogin(login);
 
-        if (studentDoesNotExist()) {
-            return invalidLogin();
+        if (studentDoesNotExist(student)) {
+            model.addAttribute("Error", "Аккаунта с таким логином не существует");
+            return PATH;
         }
-
-        if (passwordIsNotCorrect(password)) {
-            return invalidPassword();
+        if (passwordIsNotCorrect(student, password)) {
+            model.addAttribute("Error", "Неверный пароль, попробуйте ещё раз");
+            return PATH;
         }
-
-        return signIn();
+        return signIn(student, login);
     }
 
 
-    private boolean studentDoesNotExist() {
+    private boolean studentDoesNotExist(Student student) {
         return student.getLogin().equals("null");
     }
 
-    private String invalidLogin() {
-        model.addAttribute("Error", "Аккаунта с таким логином не существует");
-        return PATH;
-    }
-
-    private boolean passwordIsNotCorrect(String password) {
+    private boolean passwordIsNotCorrect(Student student, String password) {
         return !student.getPassword().equals(password);
     }
 
-    private String invalidPassword() {
-        model.addAttribute("Error", "Неверный пароль, попробуйте ещё раз");
-        return PATH;
-    }
-
-    private String signIn() {
+    private String signIn(Student student, String login) {
         LoggedStudent.setLogin(login);
         LoggedStudent.setStudent(student);
         return "redirect:/accountStudent";
