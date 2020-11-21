@@ -14,7 +14,7 @@ import java.util.List;
 @Controller
 public class MarkList {
 
-    final String PATH = "teacher/markList";
+    final String PATH = "teacher/marks/markList";
 
     @GetMapping("/markList")
     public String markList(Model model) {

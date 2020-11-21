@@ -11,7 +11,7 @@ import java.util.Set;
 @Controller
 public class GradeList {
 
-    final String PATH = "workbook/gradeList";
+    final String PATH = "student/pages/gradeList";
 
     @GetMapping("/gradeList")
     public String getGrades(

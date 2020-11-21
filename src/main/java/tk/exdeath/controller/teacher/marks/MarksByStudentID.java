@@ -15,7 +15,7 @@ import java.util.List;
 @Controller
 public class MarksByStudentID {
 
-    final String PATH = "teacher/marksByStudentID";
+    final String PATH = "teacher/marks/marksByStudentID";
 
     @GetMapping("/marksByStudentID")
     public String marksByStudentID(

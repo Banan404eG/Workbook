@@ -13,7 +13,7 @@ import java.util.List;
 @Controller
 public class PageList {
 
-    final String PATH = "workbook/pageList";
+    final String PATH = "student/pages/pageList";
 
     @GetMapping("/pageList")
     public String getPages(

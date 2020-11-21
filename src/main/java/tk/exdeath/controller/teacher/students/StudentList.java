@@ -12,6 +12,8 @@ import java.util.List;
 @Controller
 public class StudentList {
 
+    final String PATH = "teacher/students/studentList";
+
     @GetMapping("/studentList")
     public String studentList(Model model) {
         List<String> studentNames = new ArrayList<>();
@@ -24,6 +26,6 @@ public class StudentList {
 
         model.addAttribute("students", studentNames);
         model.addAttribute("IDs", studentIDs);
-        return "teacher/studentList";
+        return PATH;
     }
 }

@@ -8,7 +8,7 @@ import tk.exdeath.model.service.PageService;
 @Controller
 public class LessonList {
 
-    final String PATH = "workbook/lessonList";
+    final String PATH = "student/pages/lessonList";
 
     @GetMapping("/lessonList")
     public String getLessons(Model model) {

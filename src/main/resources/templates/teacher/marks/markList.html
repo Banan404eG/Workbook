@@ -16,13 +16,14 @@
         }
 
         table.workbook td {
-            width: 33%;
+            width: 10%;
             vertical-align: top;
         }
 
         td.right {
             text-align: left;
         }
+
         A {
             text-decoration: none;
         }
@@ -33,18 +34,18 @@
     <tr>
         <td class="right">
             <pre>
-                <h1 style="text-align: center"> Ученики </h1><br>
-                <li style="font-size: 30px" th:each="student : ${students}" th:utext="${student}"></li>
+                <h1 style="text-align: center"> Ссылки </h1><br>
+                <a style="font-size: 30px" th:each="studentID : ${studentIDs}"
+                   th:href="@{|/marksByStudentID?studentID=${studentID}|}"
+                   th:utext="'X&lt;br /&gt;'">
+                </a>
             </pre>
         </td>
 
         <td class="right">
             <pre>
-                <h1 style="text-align: center"> Ссылки </h1><br>
-                <a style="font-size: 30px" th:each="studentID : ${studentIDs}"
-                   th:href="@{|/marksByStudentID?studentID=${studentID}|}"
-                   th:utext="'ссылка на задание &lt;br /&gt;'">
-                </a>
+                <h1 style="text-align: center"> Ученики </h1><br>
+                <li style="font-size: 30px" th:each="student : ${students}" th:utext="${student}"></li>
             </pre>
         </td>
 

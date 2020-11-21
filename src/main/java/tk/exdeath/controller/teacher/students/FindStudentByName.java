@@ -14,7 +14,8 @@ import java.util.List;
 @Controller
 public class FindStudentByName {
 
-    final String PATH = "teacher/findStudentByName";
+    final String PATH = "teacher/students/findStudentByName";
+    final String STUDENT_LIST_PATH = "teacher/students/studentList";
 
     @GetMapping("/findStudentByName")
     public String returnPage() {
@@ -69,6 +70,6 @@ public class FindStudentByName {
 
         model.addAttribute("students", studentNames);
         model.addAttribute("IDs", studentIDs);
-        return "teacher/studentList";
+        return STUDENT_LIST_PATH;
     }
 }

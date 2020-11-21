@@ -4,6 +4,7 @@ import org.hibernate.annotations.Type;
 
 import javax.persistence.*;
 import java.io.Serializable;
+import java.util.Objects;
 
 @Entity
 @Table(name = "workbook.marks")
@@ -17,14 +18,14 @@ public class Mark implements Serializable {
     @JoinColumn(name = "task_id")
     private Task task;
 
-    @Column(columnDefinition = "varchar[]")
-    @Type(type = "tk.exdeath.model.hibernate.SqlStringArray")
-    private String[] marks;
-
     @Id
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "teacher_id")
     private Teacher teacher;
+
+    @Column(columnDefinition = "varchar[]")
+    @Type(type = "tk.exdeath.model.hibernate.SqlStringArray")
+    private String[] marks;
 
     public Mark() {
     }
@@ -61,6 +62,20 @@ public class Mark implements Serializable {
         public PrimaryKey(Task task, Teacher teacher) {
             this.task = task;
             this.teacher = teacher;
+        }
+
+        @Override
+        public boolean equals(Object o) {
+            if (this == o) return true;
+            if (o == null || getClass() != o.getClass()) return false;
+            PrimaryKey that = (PrimaryKey) o;
+            return task.equals(that.task) &&
+                    teacher.equals(that.teacher);
+        }
+
+        @Override
+        public int hashCode() {
+            return Objects.hash(task, teacher);
         }
     }
 }
