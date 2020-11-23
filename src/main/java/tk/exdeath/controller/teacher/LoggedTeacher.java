@@ -1,7 +1,7 @@
 package tk.exdeath.controller.teacher;
 
-import tk.exdeath.model.Teacher;
-import tk.exdeath.model.service.TeacherService;
+import tk.exdeath.model.database.entities.Teacher;
+import tk.exdeath.model.database.service.TeacherService;
 
 public abstract class LoggedTeacher {
 

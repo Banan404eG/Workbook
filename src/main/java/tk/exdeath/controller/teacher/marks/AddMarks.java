@@ -4,10 +4,10 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import tk.exdeath.controller.teacher.LoggedTeacher;
-import tk.exdeath.model.Mark;
-import tk.exdeath.model.Student;
-import tk.exdeath.model.Task;
-import tk.exdeath.model.Teacher;
+import tk.exdeath.model.database.entities.Mark;
+import tk.exdeath.model.database.entities.Student;
+import tk.exdeath.model.database.entities.Task;
+import tk.exdeath.model.database.entities.Teacher;
 
 @Controller
 public class AddMarks {

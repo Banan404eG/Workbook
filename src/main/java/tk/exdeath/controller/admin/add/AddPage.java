@@ -6,8 +6,8 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import tk.exdeath.controller.admin.LoggedAdmin;
-import tk.exdeath.model.Page;
-import tk.exdeath.model.service.PageService;
+import tk.exdeath.model.database.entities.Page;
+import tk.exdeath.model.database.service.PageService;
 
 @Controller
 public class AddPage {

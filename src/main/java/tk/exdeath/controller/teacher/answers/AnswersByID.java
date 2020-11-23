@@ -5,11 +5,11 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import tk.exdeath.controller.teacher.LoggedTeacher;
-import tk.exdeath.model.Mark;
-import tk.exdeath.model.Page;
-import tk.exdeath.model.Task;
-import tk.exdeath.model.service.PageService;
-import tk.exdeath.model.service.StudentService;
+import tk.exdeath.model.database.entities.Mark;
+import tk.exdeath.model.database.entities.Page;
+import tk.exdeath.model.database.entities.Task;
+import tk.exdeath.model.database.service.PageService;
+import tk.exdeath.model.database.service.StudentService;
 
 @Controller
 public class AnswersByID {

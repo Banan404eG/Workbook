@@ -4,9 +4,9 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestParam;
-import tk.exdeath.model.Student;
-import tk.exdeath.model.Task;
-import tk.exdeath.model.service.StudentService;
+import tk.exdeath.model.database.entities.Student;
+import tk.exdeath.model.database.entities.Task;
+import tk.exdeath.model.database.service.StudentService;
 
 import java.util.ArrayList;
 import java.util.List;

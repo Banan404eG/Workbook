@@ -6,8 +6,8 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import tk.exdeath.controller.admin.LoggedAdmin;
-import tk.exdeath.model.Teacher;
-import tk.exdeath.model.service.TeacherService;
+import tk.exdeath.model.database.entities.Teacher;
+import tk.exdeath.model.database.service.TeacherService;
 
 @Controller
 public class DeleteTeacher {

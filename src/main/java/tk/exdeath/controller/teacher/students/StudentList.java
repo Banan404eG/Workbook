@@ -4,7 +4,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import tk.exdeath.controller.teacher.LoggedTeacher;
-import tk.exdeath.model.Student;
+import tk.exdeath.model.database.entities.Student;
 
 import java.util.ArrayList;
 import java.util.List;
