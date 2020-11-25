@@ -1,4 +1,4 @@
-package tk.exdeath.controller.teacher;
+package tk.exdeath.model.teacher.account;
 
 import tk.exdeath.model.database.entities.Teacher;
 import tk.exdeath.model.database.service.TeacherService;

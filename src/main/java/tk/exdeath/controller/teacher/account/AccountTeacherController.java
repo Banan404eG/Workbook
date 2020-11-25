@@ -1,17 +1,18 @@
-package tk.exdeath.controller.teacher;
+package tk.exdeath.controller.teacher.account;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import tk.exdeath.model.teacher.account.AccountTeacher;
 
 @Controller
-public class AccountTeacher {
+public class AccountTeacherController {
 
     final String PATH = "teacher/accountTeacher";
 
     @GetMapping("/accountTeacher")
     public String returnPage(Model model) {
-        model.addAttribute("Name", LoggedTeacher.getTeacher().getFirstName());
+        model.addAttribute("Name", AccountTeacher.getTeacherName());
         return PATH;
     }
 }
