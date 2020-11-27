@@ -1,4 +1,4 @@
-package tk.exdeath.model.student.pages;
+package tk.exdeath.model.student.workbooks;
 
 import tk.exdeath.model.database.service.PageService;
 

@@ -3,7 +3,7 @@ package tk.exdeath.controller.student.workbooks;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
-import tk.exdeath.model.student.pages.LessonList;
+import tk.exdeath.model.student.workbooks.LessonList;
 
 @Controller
 public class LessonListController {

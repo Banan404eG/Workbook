@@ -5,7 +5,8 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
-import tk.exdeath.model.student.account.AuthStudent;
+
+import static tk.exdeath.model.student.account.AuthStudent.authStudent;
 
 @Controller
 public class AuthStudentController {
@@ -20,17 +21,12 @@ public class AuthStudentController {
     @PostMapping("/authStudent")
     public String passCheck(
             @RequestParam String login, @RequestParam String password, Model model) {
-
-        AuthStudent authStudent = new AuthStudent(login, password);
-        if (authStudent.invalidLogin()) {
-            model.addAttribute("Error", "Аккаунта с таким логином не существует");
+        try {
+            authStudent(login, password);
+            return "redirect:/accountStudent";
+        } catch (RuntimeException ex) {
+            model.addAttribute("Error", ex.getMessage());
             return PATH;
         }
-        if (authStudent.invalidPassword()) {
-            model.addAttribute("Error", "Неверный пароль, попробуйте ещё раз");
-            return PATH;
-        }
-        authStudent.validationIsSuccessful();
-        return "redirect:/accountStudent";
     }
 }

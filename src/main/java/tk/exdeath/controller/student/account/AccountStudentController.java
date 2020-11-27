@@ -12,7 +12,12 @@ public class AccountStudentController {
 
     @GetMapping("/accountStudent")
     public String returnPage(Model model) {
-        model.addAttribute("Name", AccountStudent.getStudentName());
-        return PATH;
+        try {
+            model.addAttribute("Name", AccountStudent.getStudentName());
+            return PATH;
+        } catch (RuntimeException ex) {
+            model.addAttribute("Error", ex.getMessage());
+            return "errorPage";
+        }
     }
 }
