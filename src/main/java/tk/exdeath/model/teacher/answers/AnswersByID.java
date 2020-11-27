@@ -1,4 +1,4 @@
-package tk.exdeath.model.teacher.students;
+package tk.exdeath.model.teacher.answers;
 
 import tk.exdeath.model.database.entities.Mark;
 import tk.exdeath.model.database.entities.Page;
@@ -9,50 +9,58 @@ import tk.exdeath.model.teacher.account.LoggedTeacher;
 
 public class AnswersByID {
 
-    private final int RIGHT_ANSWERS_STUDENT_ID = 4;
+    final int RIGHT_ANSWERS_STUDENT_ID = 4;
 
     private final int studentID, id;
-    private final StudentService studentService;
+    private final String[] rightAnswers;
     private final Task task;
-    private Page page;
+    private final Page page;
 
     public AnswersByID(int studentID, int id) {
-        studentService = new StudentService();
         this.studentID = studentID;
         this.id = id;
-        task = getTask();
-        if (task != null) {
-            page = getPage();
+        if (incorrectInput()) {
+            throw new RuntimeException("Некорректный ID ученика или ID задания");
         }
+        StudentService studentService = new StudentService();
+        task = setTask(studentService);
+        page = setPage();
+        rightAnswers = setRightAnswers(studentService);
+        studentService.closeSession();
     }
 
-    private Task getTask() {
+
+    private boolean incorrectInput() {
+        return studentID < 1 || id < 1;
+    }
+
+    private Task setTask(StudentService studentService) {
         for (Task task : studentService.readByID(studentID).getTasks()) {
             if (task.getId() == id) {
                 return task;
             }
         }
-        return null;
+        throw new RuntimeException("Задания с таким ID не существует");
     }
 
-    private Page getPage() {
+    private Page setPage() {
         PageService pageService = new PageService();
         Page page = pageService.read(task.getLesson(), task.getGrade(), task.getPage());
         pageService.closeSession();
         return page;
     }
 
-    public boolean incorrectInput() {
-        return studentID < 1 || id < 1;
+    private String[] setRightAnswers(StudentService studentService) {
+        for (Task task : studentService.readByID(RIGHT_ANSWERS_STUDENT_ID).getTasks()) {
+            if (task.getLesson().equals(this.task.getLesson()) &&
+                    task.getGrade() == this.task.getGrade() &&
+                    task.getPage() == this.task.getPage()) {
+                return task.getAnswers();
+            }
+        }
+        return new String[]{"Правильные ответы не обнаружены"};
     }
 
-    public boolean taskDoesNotExist() {
-        return task == null;
-    }
-
-    public boolean teacherIsLogged() {
-        return LoggedTeacher.getTeacher() != null;
-    }
 
     public String getPicture() {
         return page.getPicture();
@@ -71,17 +79,20 @@ public class AnswersByID {
     }
 
     public String[] getRightAnswers() {
-        for (Task task : studentService.readByID(RIGHT_ANSWERS_STUDENT_ID).getTasks()) {
-            if (task.getLesson().equals(this.task.getLesson()) &&
-                    task.getGrade() == this.task.getGrade() &&
-                    task.getPage() == this.task.getPage()) {
-                return task.getAnswers();
-            }
+        return rightAnswers;
+    }
+
+    public String getRole() {
+        if (LoggedTeacher.getTeacher() != null) {
+            return "teacher";
         }
-        return new String[]{"Правильные ответы не обнаружены"};
+        return "watcher";
     }
 
     public String[] getMarks() {
+        if (LoggedTeacher.getTeacher() == null) {
+            return new String[]{};
+        }
         for (Mark mark : LoggedTeacher.getTeacher().getMarks()) {
             if (mark.getTaskID() == id) {
                 return mark.getMarks();

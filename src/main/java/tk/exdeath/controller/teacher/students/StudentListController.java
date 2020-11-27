@@ -12,10 +12,14 @@ public class StudentListController {
 
     @GetMapping("/studentList")
     public String studentList(Model model) {
-        StudentList studentList = new StudentList();
-        studentList.setStudents();
-        model.addAttribute("students", studentList.getStudentNames());
-        model.addAttribute("IDs", studentList.getStudentIDs());
-        return PATH;
+        try {
+            StudentList studentList = new StudentList();
+            model.addAttribute("students", studentList.getStudentNames());
+            model.addAttribute("IDs", studentList.getStudentIDs());
+            return PATH;
+        } catch (RuntimeException ex) {
+            model.addAttribute("Error", ex.getMessage());
+            return "errorPage";
+        }
     }
 }

@@ -8,22 +8,33 @@ import java.util.List;
 public class FindStudentByName {
 
     private List<Student> students;
-    private final String firstName, secondName;
-    StudentList studentList;
+    private StudentList studentList;
 
     public FindStudentByName(String firstName, String secondName) {
-        this.firstName = firstName;
-        this.secondName = secondName;
+        if (incorrectInput(firstName, secondName)) {
+            throw new RuntimeException("Некорректный ввод");
+        }
+        setStudents(firstName, secondName);
+        if (studentDoesNotExist()) {
+            throw new RuntimeException("Ученика с такими именем и фамилией не существует");
+        }
+        if (!studentIsUnique()) {
+            studentList = new StudentList(students);
+        }
     }
 
-    public boolean incorrectInput() {
+
+    private boolean incorrectInput(String firstName, String secondName) {
         return firstName.equals("null") || secondName.equals("null");
     }
 
-    public boolean studentDoesNotExist() {
+    private void setStudents(String firstName, String secondName) {
         StudentService studentService = new StudentService();
         students = studentService.readByName(firstName, secondName);
         studentService.closeSession();
+    }
+
+    private boolean studentDoesNotExist() {
         return students.isEmpty();
     }
 
@@ -31,13 +42,9 @@ public class FindStudentByName {
         return students.size() == 1;
     }
 
+
     public int getStudentID() {
         return students.get(0).getStudentID();
-    }
-
-    public void setStudents() {
-        studentList = new StudentList();
-        studentList.setStudents(students);
     }
 
     public List<String> getStudentNames() {

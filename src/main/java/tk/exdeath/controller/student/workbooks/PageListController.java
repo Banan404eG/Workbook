@@ -1,4 +1,4 @@
-package tk.exdeath.controller.student.pages;
+package tk.exdeath.controller.student.workbooks;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;

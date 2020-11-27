@@ -22,22 +22,17 @@ public class FindStudentByNameController {
     public String findStudentByName(
             @RequestParam(defaultValue = "null") String firstName,
             @RequestParam(defaultValue = "null") String secondName, Model model) {
-
-        FindStudentByName findStudent = new FindStudentByName(firstName, secondName);
-        if (findStudent.incorrectInput()) {
-            model.addAttribute("Message", "Некорректный ввод");
+        try {
+            FindStudentByName findStudent = new FindStudentByName(firstName, secondName);
+            if (findStudent.studentIsUnique()) {
+                return "redirect:/tasksByStudentID?id=" + findStudent.getStudentID();
+            }
+            model.addAttribute("students", findStudent.getStudentNames());
+            model.addAttribute("IDs", findStudent.getStudentIDs());
+            return STUDENT_LIST_PATH;
+        } catch (RuntimeException ex) {
+            model.addAttribute("Error", ex.getMessage());
             return PATH;
         }
-        if (findStudent.studentDoesNotExist()) {
-            model.addAttribute("Error", "Ученика с такими именем и фамилией не существует");
-            return PATH;
-        }
-        if (findStudent.studentIsUnique()) {
-            return "redirect:/tasksByStudentID?id=" + findStudent.getStudentID();
-        }
-        findStudent.setStudents();
-        model.addAttribute("students", findStudent.getStudentNames());
-        model.addAttribute("IDs", findStudent.getStudentIDs());
-        return STUDENT_LIST_PATH;
     }
 }

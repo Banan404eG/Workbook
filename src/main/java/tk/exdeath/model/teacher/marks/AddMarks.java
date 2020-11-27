@@ -1,41 +1,29 @@
-package tk.exdeath.controller.teacher.marks;
+package tk.exdeath.model.teacher.marks;
 
-import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import tk.exdeath.model.teacher.account.LoggedTeacher;
 import tk.exdeath.model.database.entities.Mark;
 import tk.exdeath.model.database.entities.Student;
 import tk.exdeath.model.database.entities.Task;
 import tk.exdeath.model.database.entities.Teacher;
+import tk.exdeath.model.teacher.account.LoggedTeacher;
 
-@Controller
-public class AddMarks {
+public abstract class AddMarks {
 
-    private String[] currentMarks;
-    private Mark markToUpdate;
+    private static String[] currentMarks;
+    private static Mark markToUpdate;
 
-    @PostMapping("/marks")
-    public String marks(
-            @RequestParam(required = false, value = "marks[]") String[] marks,
-            @RequestParam int id,
-            @RequestParam int studentID) {
-
+    public static void addMarks(int id, int studentID, String[] marks) {
         Teacher teacher = LoggedTeacher.getTeacher();
-
         if (markIsNull(teacher, id)) {
             Mark mark = new Mark(getTask(studentID, id), marks, teacher);
             teacher.addMark(mark);
         } else {
             updateMarks(marks);
         }
-
         LoggedTeacher.update();
-        return "redirect:/answersByID?studentID=" + studentID + "&id=" + id;
     }
 
 
-    private boolean markIsNull(Teacher teacher, int id) {
+    private static boolean markIsNull(Teacher teacher, int id) {
         for (Mark mark : teacher.getMarks()) {
             if (mark.getTaskID() == id) {
                 currentMarks = mark.getMarks();
@@ -46,7 +34,7 @@ public class AddMarks {
         return true;
     }
 
-    private Task getTask(int studentID, int id) {
+    private static Task getTask(int studentID, int id) {
         for (Student student : LoggedTeacher.getTeacher().getStudents()) {
             if (student.getStudentID() == studentID) {
                 for (Task task : student.getTasks()) {
@@ -56,10 +44,10 @@ public class AddMarks {
                 }
             }
         }
-        return null;
+        throw new RuntimeException("Неверный ID задания или ученика");
     }
 
-    private void updateMarks(String[] newMarks) {
+    private static void updateMarks(String[] newMarks) {
         for (int i = 0; i < currentMarks.length; i++) {
             if (!newMarks[i].equals("")) {
                 currentMarks[i] = newMarks[i];

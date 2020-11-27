@@ -3,28 +3,27 @@ package tk.exdeath.model.teacher.account;
 import tk.exdeath.model.database.entities.Teacher;
 import tk.exdeath.model.database.service.TeacherService;
 
-public class AuthTeacher {
+public abstract class AuthTeacher {
 
-    Teacher teacher;
-    String login, password;
-
-    public AuthTeacher(String login, String password) {
+    public static void authTeacher(String login, String password) {
         TeacherService service = LoggedTeacher.getTeacherService();
-        teacher = service.readByLogin(login);
-        this.login = login;
-        this.password = password;
+        Teacher teacher = service.readByLogin(login);
+        if (invalidLogin(teacher)) {
+            throw new RuntimeException("Аккаунта с таким логином не существует");
+        }
+        if (invalidPassword(teacher, password)) {
+            throw new RuntimeException("Неверный пароль, попробуйте ещё раз");
+        }
+        LoggedTeacher.setLogin(login);
+        LoggedTeacher.setTeacher(teacher);
     }
 
-    public boolean invalidLogin() {
+
+    private static boolean invalidLogin(Teacher teacher) {
         return teacher.getLogin().equals("null");
     }
 
-    public boolean invalidPassword() {
+    private static boolean invalidPassword(Teacher teacher, String password) {
         return !teacher.getPassword().equals(password);
-    }
-
-    public void validationIsSuccessful() {
-        LoggedTeacher.setLogin(login);
-        LoggedTeacher.setTeacher(teacher);
     }
 }

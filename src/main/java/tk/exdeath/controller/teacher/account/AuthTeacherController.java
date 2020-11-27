@@ -5,12 +5,13 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
-import tk.exdeath.model.teacher.account.AuthTeacher;
+
+import static tk.exdeath.model.teacher.account.AuthTeacher.authTeacher;
 
 @Controller
 public class AuthTeacherController {
 
-    final String PATH = "teacher/authTeacher";
+    final String PATH = "teacher/account/authTeacher";
 
     @GetMapping("/authTeacher")
     public String returnPage() {
@@ -20,17 +21,12 @@ public class AuthTeacherController {
     @PostMapping("/authTeacher")
     public String passCheck(
             @RequestParam String login, @RequestParam String password, Model model) {
-
-        AuthTeacher authTeacher = new AuthTeacher(login, password);
-        if (authTeacher.invalidLogin()) {
-            model.addAttribute("Error", "Аккаунта с таким логином не существует");
+        try {
+            authTeacher(login, password);
+            return "redirect:/accountTeacher";
+        } catch (RuntimeException ex) {
+            model.addAttribute("Error", ex.getMessage());
             return PATH;
         }
-        if (authTeacher.invalidPassword()) {
-            model.addAttribute("Error", "Неверный пароль, попробуйте ещё раз");
-            return PATH;
-        }
-        authTeacher.validationIsSuccessful();
-        return "redirect:/accountTeacher";
     }
 }

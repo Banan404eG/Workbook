@@ -1,4 +1,4 @@
-package tk.exdeath.model.teacher.students;
+package tk.exdeath.model.teacher.answers;
 
 import tk.exdeath.model.database.entities.Student;
 import tk.exdeath.model.database.entities.Task;
@@ -12,14 +12,28 @@ public class TasksByStudentID {
     private final List<String> tableNames = new ArrayList<>();
     private final List<Integer> taskIDs = new ArrayList<>();
     Student student;
-    int id;
 
     public TasksByStudentID(int id) {
+        if (incorrectInput(id)) {
+            throw new RuntimeException("Некорректный ввод");
+        }
         StudentService service = new StudentService();
         student = service.readByID(id);
+        if (studentDoesNotExist()) {
+            service.closeSession();
+            throw new RuntimeException("Ученика с такими ID не существует");
+        }
         setTasks();
         service.closeSession();
-        this.id = id;
+    }
+
+
+    private boolean incorrectInput(int id) {
+        return id < 1;
+    }
+
+    private boolean studentDoesNotExist() {
+        return student.getLogin().equals("null");
     }
 
     private void setTasks() {
@@ -29,13 +43,6 @@ public class TasksByStudentID {
         }
     }
 
-    public boolean incorrectInput() {
-        return id < 1;
-    }
-
-    public boolean studentDoesNotExist() {
-        return student.getLogin().equals("null");
-    }
 
     public List<String> getTableNames() {
         return tableNames;

@@ -8,11 +8,16 @@ import tk.exdeath.model.teacher.account.AccountTeacher;
 @Controller
 public class AccountTeacherController {
 
-    final String PATH = "teacher/accountTeacher";
+    final String PATH = "teacher/account/accountTeacher";
 
     @GetMapping("/accountTeacher")
     public String returnPage(Model model) {
-        model.addAttribute("Name", AccountTeacher.getTeacherName());
-        return PATH;
+        try {
+            model.addAttribute("Name", AccountTeacher.getTeacherName());
+            return PATH;
+        } catch (RuntimeException ex) {
+            model.addAttribute("Error", ex.getMessage());
+            return "errorPage";
+        }
     }
 }
