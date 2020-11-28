@@ -1,4 +1,4 @@
-package tk.exdeath.controller.admin;
+package tk.exdeath.model.admin.account;
 
 public abstract class LoggedAdmin {
 
@@ -8,8 +8,10 @@ public abstract class LoggedAdmin {
 
     private static boolean isLogged = false;
 
-    public static boolean isKeyValid(String key) {
-        return key.equals(LoggedAdmin.KEY);
+    public static void keyCheck(String key) {
+        if (!key.equals(LoggedAdmin.KEY)) {
+            throw new RuntimeException("Oops");
+        }
     }
 
     public static boolean areLoginAndPasswordValid(String login, String password) {
