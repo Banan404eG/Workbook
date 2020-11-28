@@ -1,11 +1,16 @@
 package tk.exdeath.model.student.account;
 
-public abstract class AccountStudent {
+import javax.annotation.Resource;
 
-    public static String getStudentName() {
-        if (LoggedStudent.getStudent() == null) {
+public class AccountStudent {
+
+    @Resource(name = "getLoggedStudent")
+    private LoggedStudent loggedStudent;
+
+    public String getStudentName() {
+        if (loggedStudent.getStudent() == null) {
             throw new RuntimeException("Для использования аккаунта, вы должны пройти аутентификацию");
         }
-        return LoggedStudent.getStudent().getFirstName();
+        return loggedStudent.getStudent().getFirstName();
     }
 }

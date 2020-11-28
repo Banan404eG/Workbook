@@ -5,13 +5,17 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import tk.exdeath.model.student.account.AuthStudent;
 
-import static tk.exdeath.model.student.account.AuthStudent.authStudent;
+import javax.annotation.Resource;
 
 @Controller
 public class AuthStudentController {
 
     final String PATH = "student/account/authStudent";
+
+    @Resource(name = "getAuthStudent")
+    private AuthStudent authStudent;
 
     @GetMapping("/authStudent")
     public String returnPage() {
@@ -22,7 +26,7 @@ public class AuthStudentController {
     public String passCheck(
             @RequestParam String login, @RequestParam String password, Model model) {
         try {
-            authStudent(login, password);
+            authStudent.authStudent(login, password);
             return "redirect:/accountStudent";
         } catch (RuntimeException ex) {
             model.addAttribute("Error", ex.getMessage());

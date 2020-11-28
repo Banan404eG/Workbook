@@ -3,33 +3,37 @@ package tk.exdeath.model.student.account;
 import tk.exdeath.model.database.entities.Student;
 import tk.exdeath.model.database.service.StudentService;
 
-public abstract class LoggedStudent {
+public class LoggedStudent {
 
-    private static final StudentService studentService = new StudentService();
-    private static Student student;
-    private static String login;
+    private final StudentService studentService = new StudentService();
+    private Student student;
+    private String login;
 
-    public static StudentService getStudentService() {
+    public StudentService getStudentService() {
         return studentService;
     }
 
-    public static Student getStudent() {
+    public Student getStudent() {
         return student;
     }
 
-    public static String getLogin() {
+    public String getLogin() {
         return login;
     }
 
-    public static void setStudent(Student student) {
-        LoggedStudent.student = student;
+    public void setStudent(Student student) {
+        this.student = student;
     }
 
-    public static void setLogin(String login) {
-        LoggedStudent.login = login;
+    public void setLogin(String login) {
+        this.login = login;
     }
 
-    public static void update() {
+    public void update() {
         studentService.update(student);
+    }
+
+    public void closeSession() {
+        studentService.closeSession();
     }
 }

@@ -4,11 +4,19 @@ import tk.exdeath.model.database.entities.Student;
 import tk.exdeath.model.database.entities.Task;
 import tk.exdeath.model.student.account.LoggedStudent;
 
-public abstract class AddAnswers {
+import javax.annotation.Resource;
 
-    public static void addAnswers(String lesson, int grade, int page, String[] answers) {
-        Student student = LoggedStudent.getStudent();
+public class AddAnswers {
+
+    @Resource(name = "getLoggedStudent")
+    private LoggedStudent loggedStudent;
+
+    public void addAnswers(String lesson, int grade, int page, String[] answers) {
+        Student student = loggedStudent.getStudent();
+        if (student == null) {
+            throw new RuntimeException("Для использования аккаунта, вы должны пройти аутентификацию");
+        }
         student.addTask(new Task(student, lesson, grade, page, answers));
-        LoggedStudent.update();
+        loggedStudent.update();
     }
 }
