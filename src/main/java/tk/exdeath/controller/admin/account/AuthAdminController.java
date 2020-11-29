@@ -5,7 +5,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
-import tk.exdeath.model.admin.account.AuthAdmin;
+import tk.exdeath.model.logic.admin.account.AuthAdmin;
 
 @Controller
 public class AuthAdminController {

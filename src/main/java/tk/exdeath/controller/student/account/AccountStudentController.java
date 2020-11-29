@@ -3,7 +3,7 @@ package tk.exdeath.controller.student.account;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
-import tk.exdeath.model.student.account.AccountStudent;
+import tk.exdeath.model.logic.student.account.AccountStudent;
 
 import javax.annotation.Resource;
 

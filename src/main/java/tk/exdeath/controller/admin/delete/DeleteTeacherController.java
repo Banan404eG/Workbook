@@ -5,7 +5,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
-import tk.exdeath.model.admin.delete.DeleteTeacher;
+import tk.exdeath.model.logic.admin.delete.DeleteTeacher;
 
 @Controller
 public class DeleteTeacherController {

@@ -5,13 +5,18 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
-import tk.exdeath.model.teacher.students.FindStudentByName;
+import tk.exdeath.model.logic.teacher.students.FindStudentByName;
+
+import javax.annotation.Resource;
 
 @Controller
 public class FindStudentByNameController {
 
     final String PATH = "teacher/students/findStudentByName";
     final String STUDENT_LIST_PATH = "teacher/students/studentList";
+
+    @Resource(name = "getFindStudentByName")
+    private FindStudentByName findStudent;
 
     @GetMapping("/findStudentByName")
     public String returnPage() {
@@ -23,7 +28,7 @@ public class FindStudentByNameController {
             @RequestParam(defaultValue = "null") String firstName,
             @RequestParam(defaultValue = "null") String secondName, Model model) {
         try {
-            FindStudentByName findStudent = new FindStudentByName(firstName, secondName);
+            findStudent.findStudentByName(firstName, secondName);
             if (findStudent.studentIsUnique()) {
                 return "redirect:/tasksByStudentID?id=" + findStudent.getStudentID();
             }

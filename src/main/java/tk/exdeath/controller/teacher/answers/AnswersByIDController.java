@@ -4,7 +4,9 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestParam;
-import tk.exdeath.model.teacher.answers.AnswersByID;
+import tk.exdeath.model.logic.teacher.answers.AnswersByID;
+
+import javax.annotation.Resource;
 
 @Controller
 public class AnswersByIDController {
@@ -12,11 +14,14 @@ public class AnswersByIDController {
     final String PATH = "workbook/page";
     final String INPUT = "<input name=\"marks[]\" placeholder=\"Оценка: \" type=\"text\"><br><br>";
 
+    @Resource(name = "getAnswersByID")
+    private AnswersByID answersByID;
+
     @GetMapping("/answersByID")
     public String taskByID(@RequestParam(defaultValue = "0") int studentID,
                            @RequestParam(defaultValue = "0") int id, Model model) {
         try {
-            AnswersByID answersByID = new AnswersByID(studentID, id);
+            answersByID.answersByID(studentID, id);
             model.addAttribute("id", id);
             model.addAttribute("studentID", studentID);
             model.addAttribute("studentAnswers", answersByID.getStudentAnswers());

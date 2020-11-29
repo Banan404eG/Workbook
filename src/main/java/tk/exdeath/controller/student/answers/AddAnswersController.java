@@ -4,7 +4,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
-import tk.exdeath.model.student.answers.AddAnswers;
+import tk.exdeath.model.logic.student.answers.AddAnswers;
 
 import javax.annotation.Resource;
 
