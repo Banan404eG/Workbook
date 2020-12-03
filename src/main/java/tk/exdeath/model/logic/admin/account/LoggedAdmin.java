@@ -1,30 +1,16 @@
 package tk.exdeath.model.logic.admin.account;
 
-public abstract class LoggedAdmin {
+public class LoggedAdmin {
 
-    static final String KEY = "O0O-StArTuP-C0MP7NY";
-    static final String LOGIN = "1";
-    static final String PASSWORD = "1";
+    private boolean isLogged = false;
 
-    private static boolean isLogged = false;
+    public void logIn() {
+        isLogged = true;
+    }
 
-    public static void keyCheck(String key) {
-        if (!key.equals(LoggedAdmin.KEY)) {
+    public void validationCheck() {
+        if (!isLogged) {
             throw new RuntimeException("Oops");
         }
-    }
-
-    public static boolean areLoginAndPasswordValid(String login, String password) {
-        if (login.equals(LOGIN) && password.equals(PASSWORD)) {
-            isLogged = true;
-            return true;
-        }
-        return false;
-    }
-
-    public static boolean isLogged() {
-        boolean isLogged = LoggedAdmin.isLogged;
-        LoggedAdmin.isLogged = false;
-        return isLogged;
     }
 }

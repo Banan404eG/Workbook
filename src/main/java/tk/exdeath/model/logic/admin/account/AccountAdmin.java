@@ -1,11 +1,13 @@
 package tk.exdeath.model.logic.admin.account;
 
-public abstract class AccountAdmin {
+import javax.annotation.Resource;
 
-    public static String getKey() {
-        if (!LoggedAdmin.isLogged()) {
-            throw new RuntimeException("Oops");
-        }
-        return LoggedAdmin.KEY;
+public class AccountAdmin {
+
+    @Resource(name = "getLoggedAdmin")
+    private LoggedAdmin loggedAdmin;
+
+    public void validationCheck() {
+        loggedAdmin.validationCheck();
     }
 }

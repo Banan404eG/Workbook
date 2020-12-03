@@ -7,16 +7,20 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import tk.exdeath.model.logic.admin.add.AddPage;
 
+import javax.annotation.Resource;
+
 @Controller
 public class AddPageController {
 
     final String PATH = "admin/add/addPage";
 
+    @Resource(name = "getAddPage")
+    private AddPage addPage;
+
     @GetMapping("/addPage")
-    public String returnPage(
-            @RequestParam(defaultValue = "ERROR") String key, Model model) {
+    public String returnPage(Model model) {
         try {
-            AddPage.keyCheck(key);
+            addPage.validationCheck();
             return PATH;
         } catch (RuntimeException ex) {
             model.addAttribute("Error", ex.getMessage());
@@ -32,7 +36,7 @@ public class AddPageController {
             @RequestParam(defaultValue = "0") int numberOfInputs,
             @RequestParam(defaultValue = "null") String pictureURL, Model model) {
         try {
-            AddPage.addPage(lesson, grade, page, numberOfInputs, pictureURL);
+            addPage.addPage(lesson, grade, page, numberOfInputs, pictureURL);
             model.addAttribute("Message", lesson + " " + grade + " " + page + " успешно создан");
             return PATH;
         } catch (RuntimeException ex) {

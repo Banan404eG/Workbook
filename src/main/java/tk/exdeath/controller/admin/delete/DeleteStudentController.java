@@ -7,16 +7,20 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import tk.exdeath.model.logic.admin.delete.DeleteStudent;
 
+import javax.annotation.Resource;
+
 @Controller
 public class DeleteStudentController {
 
     final String PATH = "admin/delete/deleteStudent";
 
+    @Resource(name = "getDeleteStudent")
+    private DeleteStudent deleteStudent;
+
     @GetMapping("/deleteStudent")
-    public String returnPage(
-            @RequestParam(defaultValue = "ERROR") String key, Model model) {
+    public String returnPage(Model model) {
         try {
-            DeleteStudent.keyCheck(key);
+            deleteStudent.validationCheck();
             return PATH;
         } catch (RuntimeException ex) {
             model.addAttribute("Error", ex.getMessage());
@@ -28,7 +32,7 @@ public class DeleteStudentController {
     public String deleteStudent(
             @RequestParam(defaultValue = "null") String login, Model model) {
         try {
-            DeleteStudent.deleteStudent(login);
+            deleteStudent.deleteStudent(login);
             model.addAttribute("Message", login + " успешно удален");
             return PATH;
         } catch (RuntimeException ex) {

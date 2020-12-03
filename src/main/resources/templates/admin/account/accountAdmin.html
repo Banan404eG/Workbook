@@ -1,9 +1,9 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org">
+<html>
 <head>
     <title> Личный кабинет </title>
     <meta content="text/html; charset=UTF-8" http-equiv="Content-Type">
-    <link rel="stylesheet" th:href="@{webjars/bootstrap/4.2.1/css/bootstrap.min.css}"/>
+    <link rel="stylesheet"/>
     <style>
         body {
             padding-top: 5rem;
@@ -16,18 +16,18 @@
     </style>
 </head>
 <body>
-<a th:href="@{|/addStudent?key=${key}|}"> Добавить ученика </a>
+<a href="addStudent"> Добавить ученика </a>
 <br>
-<a th:href="@{|/addTeacher?key=${key}|}"> Добавить учителя </a>
+<a href="addTeacher"> Добавить учителя </a>
 <br>
-<a th:href="@{|/addPage?key=${key}|}"> Добавить страницу </a>
+<a href="addPage"> Добавить страницу </a>
 <br><br><br>
-<a th:href="@{|/deleteStudent?key=${key}|}"> Удалить ученика </a>
+<a href="deleteStudent"> Удалить ученика </a>
 <br>
-<a th:href="@{|/deleteTeacher?key=${key}|}"> Удалить учителя </a>
+<a href="deleteTeacher"> Удалить учителя </a>
 <br>
-<a th:href="@{|/deletePage?key=${key}|}"> Удалить страницу </a>
+<a href="deletePage"> Удалить страницу </a>
 <br>
-<a th:href="@{|/mapStudentAndTeacher?key=${key}|}"> Добавить ученика к учителю </a>
+<a href="mapStudentAndTeacher"> Добавить ученика к учителю </a>
 </body>
 </html>

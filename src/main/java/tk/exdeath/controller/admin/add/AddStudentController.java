@@ -7,16 +7,20 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import tk.exdeath.model.logic.admin.add.AddStudent;
 
+import javax.annotation.Resource;
+
 @Controller
 public class AddStudentController {
 
     final String PATH = "admin/add/addStudent";
 
+    @Resource(name = "getAddStudent")
+    private AddStudent addStudent;
+
     @GetMapping("/addStudent")
-    public String returnPage(
-            @RequestParam(defaultValue = "ERROR") String key, Model model) {
+    public String returnPage(Model model) {
         try {
-            AddStudent.keyCheck(key);
+            addStudent.validationCheck();
             return PATH;
         } catch (RuntimeException ex) {
             model.addAttribute("Error", ex.getMessage());
@@ -32,7 +36,7 @@ public class AddStudentController {
             @RequestParam(defaultValue = "null") String secondName,
             @RequestParam(defaultValue = "null") String studentClass, Model model) {
         try {
-            AddStudent.addStudent(login, password, firstName, secondName, studentClass);
+            addStudent.addStudent(login, password, firstName, secondName, studentClass);
             model.addAttribute("Message", firstName + " " + secondName + " успешно создан");
             return PATH;
         } catch (RuntimeException ex) {

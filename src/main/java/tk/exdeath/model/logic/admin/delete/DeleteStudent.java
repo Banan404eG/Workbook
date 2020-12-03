@@ -4,13 +4,18 @@ import tk.exdeath.model.logic.admin.account.LoggedAdmin;
 import tk.exdeath.model.database.entities.Student;
 import tk.exdeath.model.database.service.StudentService;
 
-public abstract class DeleteStudent {
+import javax.annotation.Resource;
 
-    public static void keyCheck(String key) {
-        LoggedAdmin.keyCheck(key);
+public class DeleteStudent {
+
+    @Resource(name = "getLoggedAdmin")
+    private LoggedAdmin loggedAdmin;
+
+    public void validationCheck() {
+        loggedAdmin.validationCheck();
     }
 
-    public static void deleteStudent(String login) {
+    public void deleteStudent(String login) {
         if (incorrectInput(login)) {
             throw new RuntimeException("Некорректный ввод");
         }
@@ -25,11 +30,11 @@ public abstract class DeleteStudent {
     }
 
 
-    private static boolean incorrectInput(String login) {
+    private boolean incorrectInput(String login) {
         return login.equals("null");
     }
 
-    private static boolean loginIsInvalid(Student student) {
+    private boolean loginIsInvalid(Student student) {
         return student.getLogin().equals("null");
     }
 }

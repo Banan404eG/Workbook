@@ -1,16 +1,21 @@
 package tk.exdeath.model.logic.admin.add;
 
-import tk.exdeath.model.logic.admin.account.LoggedAdmin;
 import tk.exdeath.model.database.entities.Page;
 import tk.exdeath.model.database.service.PageService;
+import tk.exdeath.model.logic.admin.account.LoggedAdmin;
 
-public abstract class AddPage {
+import javax.annotation.Resource;
 
-    public static void keyCheck(String key) {
-        LoggedAdmin.keyCheck(key);
+public class AddPage {
+
+    @Resource(name = "getLoggedAdmin")
+    private LoggedAdmin loggedAdmin;
+
+    public void validationCheck() {
+        loggedAdmin.validationCheck();
     }
 
-    public static void addPage(String lesson, int grade, int page, int numberOfInputs, String pictureURL) {
+    public void addPage(String lesson, int grade, int page, int numberOfInputs, String pictureURL) {
         if (incorrectInput(lesson, grade, page, numberOfInputs, pictureURL)) {
             throw new RuntimeException("Некорректный ввод");
         }
@@ -24,11 +29,11 @@ public abstract class AddPage {
     }
 
 
-    private static boolean incorrectInput(String lesson, int grade, int page, int numberOfInputs, String pictureURL) {
+    private boolean incorrectInput(String lesson, int grade, int page, int numberOfInputs, String pictureURL) {
         return lesson.equals("null") || grade < 1 || page < 1 || numberOfInputs < 1 || pictureURL.equals("null");
     }
 
-    private static boolean pageExist(String lesson, int grade, int page, PageService pageService) {
+    private boolean pageExist(String lesson, int grade, int page, PageService pageService) {
         return !pageService.read(lesson, grade, page).getLesson().equals("null");
     }
 }

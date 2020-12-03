@@ -1,18 +1,23 @@
 package tk.exdeath.model.logic.admin.add;
 
-import tk.exdeath.model.logic.admin.account.LoggedAdmin;
 import tk.exdeath.model.database.entities.Student;
 import tk.exdeath.model.database.entities.Teacher;
 import tk.exdeath.model.database.service.StudentService;
 import tk.exdeath.model.database.service.TeacherService;
+import tk.exdeath.model.logic.admin.account.LoggedAdmin;
 
-public abstract class MapStudentAndTeacher {
+import javax.annotation.Resource;
 
-    public static void keyCheck(String key) {
-        LoggedAdmin.keyCheck(key);
+public class MapStudentAndTeacher {
+
+    @Resource(name = "getLoggedAdmin")
+    private LoggedAdmin loggedAdmin;
+
+    public void validationCheck() {
+        loggedAdmin.validationCheck();
     }
 
-    public static void mapStudentAndTeacher(String studentLogin, String teacherLogin) {
+    public void mapStudentAndTeacher(String studentLogin, String teacherLogin) {
         if (incorrectInput(studentLogin, teacherLogin)) {
             throw new RuntimeException("Некорректный ввод");
         }
@@ -21,7 +26,7 @@ public abstract class MapStudentAndTeacher {
     }
 
 
-    private static Student setStudent(String studentLogin) {
+    private Student setStudent(String studentLogin) {
         StudentService studentService = new StudentService();
         Student student = studentService.readByLogin(studentLogin);
         if (loginIsInvalid(student.getLogin())) {
@@ -32,7 +37,7 @@ public abstract class MapStudentAndTeacher {
         return student;
     }
 
-    private static void updateTeacher(String teacherLogin, Student student) {
+    private void updateTeacher(String teacherLogin, Student student) {
         TeacherService teacherService = new TeacherService();
         Teacher teacher = teacherService.readByLogin(teacherLogin);
         if (loginIsInvalid(teacher.getLogin())) {
@@ -44,11 +49,11 @@ public abstract class MapStudentAndTeacher {
         teacherService.closeSession();
     }
 
-    private static boolean incorrectInput(String studentLogin, String teacherLogin) {
+    private boolean incorrectInput(String studentLogin, String teacherLogin) {
         return studentLogin.equals("null") || teacherLogin.equals("null");
     }
 
-    private static boolean loginIsInvalid(String login) {
+    private boolean loginIsInvalid(String login) {
         return login.equals("null");
     }
 }

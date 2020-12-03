@@ -7,16 +7,20 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import tk.exdeath.model.logic.admin.add.MapStudentAndTeacher;
 
+import javax.annotation.Resource;
+
 @Controller
 public class MapStudentAndTeacherController {
 
     final String PATH = "admin/add/mapStudentAndTeacher";
 
+    @Resource(name = "getMapStudentAndTeacher")
+    private MapStudentAndTeacher mapStudentAndTeacher;
+
     @GetMapping("/mapStudentAndTeacher")
-    public String returnPage(
-            @RequestParam(defaultValue = "ERROR") String key, Model model) {
+    public String returnPage(Model model) {
         try {
-            MapStudentAndTeacher.keyCheck(key);
+            mapStudentAndTeacher.validationCheck();
             return PATH;
         } catch (RuntimeException ex) {
             model.addAttribute("Error", ex.getMessage());
@@ -29,7 +33,7 @@ public class MapStudentAndTeacherController {
             @RequestParam(defaultValue = "null") String studentLogin,
             @RequestParam(defaultValue = "null") String teacherLogin, Model model) {
         try {
-            MapStudentAndTeacher.mapStudentAndTeacher(studentLogin, teacherLogin);
+            mapStudentAndTeacher.mapStudentAndTeacher(studentLogin, teacherLogin);
             model.addAttribute("Message", studentLogin + " успешно добавлен к " + teacherLogin);
             return PATH;
         } catch (RuntimeException ex) {
