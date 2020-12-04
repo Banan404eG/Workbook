@@ -1,8 +1,12 @@
 package tk.exdeath.model.logic.student.account;
 
+import org.springframework.stereotype.Component;
 import tk.exdeath.model.database.entities.Student;
 import tk.exdeath.model.database.service.StudentService;
 
+import javax.annotation.PreDestroy;
+
+@Component
 public class LoggedStudent {
 
     private final StudentService studentService = new StudentService();
@@ -33,6 +37,7 @@ public class LoggedStudent {
         studentService.update(student);
     }
 
+    @PreDestroy
     public void closeSession() {
         studentService.closeSession();
     }
